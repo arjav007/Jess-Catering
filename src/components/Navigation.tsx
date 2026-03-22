@@ -79,8 +79,9 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
+          {/* UPDATED LINK HERE */}
           <a
-            href="https://jess-chocolates.com/order"
+            href="https://cocodevenci.com"
             target="_blank"
             rel="noopener noreferrer"
             className="relative"
@@ -165,8 +166,9 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
+          {/* UPDATED LINK HERE */}
           <a
-            href="https://jess-chocolates.com/order"
+            href="https://cocodevenci.com"
             target="_blank"
             rel="noopener noreferrer"
             className="relative"

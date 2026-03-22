@@ -317,19 +317,23 @@ export function StepReview({
             </button>
 
             <button
-              onClick={onProceed}
-              disabled={!isConfirmed}
-              className={`
-                flex-1 py-4 px-7 rounded-[10px] transition-all duration-300 text-base leading-6
-                ${isConfirmed
-                  ? 'bg-[#6b8a47] text-white cursor-pointer hover:bg-[#5a7339]'
-                  : 'bg-[#6b8a47]/40 text-white/60 cursor-not-allowed'
-                }
-              `}
-              style={{ fontFamily: 'var(--font-body)' }}
-            >
-              Submit Order
-            </button>
+            onClick={() => {
+              // Added a temporary alert for the client review
+              alert("Client Review Note: This is where the user will be redirected to the Merchant Warrior payment gateway. Click OK to preview the final confirmation page design!");
+              onProceed();
+            }}
+            disabled={!isConfirmed}
+            className={`
+              flex-1 py-4 px-7 rounded-[10px] transition-all duration-300 text-base leading-6
+              ${isConfirmed
+                ? 'bg-[#6b8a47] text-white cursor-pointer hover:bg-[#5a7339]'
+                : 'bg-[#6b8a47]/40 text-white/60 cursor-not-allowed'
+              }
+            `}
+            style={{ fontFamily: 'var(--font-body)' }}
+          >
+            Proceed to Payment (Integration in Progress)
+          </button>
           </div>
         </motion.div>
       </div>
