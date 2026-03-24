@@ -2,9 +2,7 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import svgPaths from '../../imports/svg-p8u8uz854l';
 
 interface EventDetails {
   firstName: string;
@@ -34,6 +32,7 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
     onDetailsChange({ ...eventDetails, [field]: value });
   };
 
+  // UPDATED: Now requires paymentMethod to be filled out
   const isFormValid = 
     eventDetails.firstName &&
     eventDetails.lastName &&
@@ -43,6 +42,7 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
     eventDetails.guestCount &&
     eventDetails.deliveryType &&
     eventDetails.deliveryDate &&
+    eventDetails.paymentMethod &&
     (eventDetails.deliveryType !== 'delivery' || eventDetails.address);
 
   return (
@@ -92,6 +92,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                     id="firstName"
                     value={eventDetails.firstName}
                     onChange={(e) => handleChange('firstName', e.target.value)}
+                    onFocus={() => setFocusedField('firstName')}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Enter your first name"
                     className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                     style={{ fontFamily: 'var(--font-body)' }}
@@ -113,6 +115,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                     id="lastName"
                     value={eventDetails.lastName}
                     onChange={(e) => handleChange('lastName', e.target.value)}
+                    onFocus={() => setFocusedField('lastName')}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Enter your last name"
                     className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                     style={{ fontFamily: 'var(--font-body)' }}
@@ -138,6 +142,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                     type="email"
                     value={eventDetails.email}
                     onChange={(e) => handleChange('email', e.target.value)}
+                    onFocus={() => setFocusedField('email')}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Enter your email address"
                     className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                     style={{ fontFamily: 'var(--font-body)' }}
@@ -160,6 +166,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                     type="tel"
                     value={eventDetails.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
+                    onFocus={() => setFocusedField('phone')}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Enter your phone number"
                     className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                     style={{ fontFamily: 'var(--font-body)' }}
@@ -209,6 +217,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                     min="1"
                     value={eventDetails.guestCount}
                     onChange={(e) => handleChange('guestCount', e.target.value)}
+                    onFocus={() => setFocusedField('guestCount')}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Enter your number of guests"
                     className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                     style={{ fontFamily: 'var(--font-body)' }}
@@ -254,6 +264,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                     type="date"
                     value={eventDetails.deliveryDate}
                     onChange={(e) => handleChange('deliveryDate', e.target.value)}
+                    onFocus={() => setFocusedField('deliveryDate')}
+                    onBlur={() => setFocusedField(null)}
                     placeholder="Select delivery date"
                     className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                     style={{ fontFamily: 'var(--font-body)' }}
@@ -276,6 +288,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                   id="address"
                   value={eventDetails.address}
                   onChange={(e) => handleChange('address', e.target.value)}
+                  onFocus={() => setFocusedField('address')}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter delivery address"
                   className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                   style={{ fontFamily: 'var(--font-body)' }}
@@ -290,7 +304,7 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                 className="text-[rgba(75,46,32,0.6)] font-medium text-sm tracking-[0.6px] capitalize"
                 style={{ fontFamily: 'var(--font-body)' }}
               >
-                preferred Payment Method
+                Preferred Payment Method <span className="text-red-600">*</span>
               </Label>
               <Select value={eventDetails.paymentMethod} onValueChange={(value) => handleChange('paymentMethod', value)}>
                 <SelectTrigger className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 h-9 text-sm focus:ring-0 focus:ring-offset-0 placeholder:text-[#a8a8a8]">
@@ -318,6 +332,8 @@ export function StepEventDetails({ eventDetails, onDetailsChange, onProceed, onB
                   id="message"
                   value={eventDetails.message}
                   onChange={(e) => handleChange('message', e.target.value)}
+                  onFocus={() => setFocusedField('message')}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter any dietary restrictions or requests"
                   className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 text-sm focus-visible:ring-0 focus-visible:border-[#917e75] placeholder:text-[#a8a8a8]"
                   style={{ fontFamily: 'var(--font-body)' }}

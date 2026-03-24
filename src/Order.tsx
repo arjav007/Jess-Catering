@@ -157,31 +157,29 @@ export default function Order({ onReturnHome, onExploreMenu }: OrderProps) {
   };
 
   const handleProceedToDetails = () => {
-    // Scroll to top smoothly
+    setCurrentStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => setCurrentStep(2), 300);
   };
 
   const handleProceedToReview = () => {
+    setCurrentStep(3);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => setCurrentStep(3), 300);
   };
 
   const handleSubmitOrder = () => {
+    setCurrentStep(4);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => setCurrentStep(4), 300);
-    // Here you would typically send the order to your backend
     console.log('Order submitted:', { selectedItems, eventDetails });
   };
 
   const handleBackToMenu = () => {
+    setCurrentStep(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => setCurrentStep(1), 300);
   };
 
   const handleBackToDetails = () => {
+    setCurrentStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => setCurrentStep(2), 300);
   };
 
   const handleReturnHome = () => {
