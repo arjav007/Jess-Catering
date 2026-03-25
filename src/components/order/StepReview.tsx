@@ -60,32 +60,53 @@ export function StepReview({
   const deliveryFee = eventDetails.deliveryType === 'delivery' ? 25 : 0;
   const total = subtotal + deliveryFee;
 
-  // Bulletproof Payment Handler
+  /// REAL Payment Handler connecting to Merchant Warrior PayPage
   const handlePayment = async () => {
-    setIsProcessing(true);
-
-    // Provide a bulletproof fallback that guarantees the page changes after 2 seconds, 
-    // even if the Vercel API endpoint fails locally during your review.
-    setTimeout(() => {
-      window.alert("Client Note: Payment successfully authorized by Merchant Warrior sandbox. \nTransaction ID: MW-TEST-987654321\nRedirecting to confirmation.");
-      setIsProcessing(false);
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      onProceed();
-    }, 2000);
+    setIsProcessing(true); 
 
     try {
-      // We still attempt the API call, but we do not block the UI waiting for it
-      fetch('/api/checkout', {
+      const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cartTotal: total, 
-          orderDetails: `Order for ${eventDetails.firstName} ${eventDetails.lastName} - ${eventDetails.eventType}`
+          orderDetails: `Order for ${eventDetails.firstName} ${eventDetails.lastName} - ${eventDetails.eventType}`,
+          customerName: `${eventDetails.firstName} ${eventDetails.lastName}`,
+          customerEmail: eventDetails.email
         }),
-      }).catch(e => console.log("API check bypassed for client review:", e));
-      
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.formFields) {
+        // 1. Create an invisible HTML form in the background
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = data.payPageUrl;
+
+        // 2. Attach all the secure data (including the hash) to the form
+        for (const key in data.formFields) {
+          if (Object.prototype.hasOwnProperty.call(data.formFields, key)) {
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = key;
+            hiddenField.value = data.formFields[key];
+            form.appendChild(hiddenField);
+          }
+        }
+
+        // 3. Attach the form to the website and instantly "click" submit!
+        document.body.appendChild(form);
+        form.submit(); 
+        
+      } else {
+        alert("Payment Failed: " + (data.message || "Could not connect to secure checkout."));
+        setIsProcessing(false); 
+      }
     } catch (error) {
-      console.log("Local test environment detected, proceeding to confirmation.");
+      console.error("Error during checkout:", error);
+      alert("Something went wrong securely connecting to the payment server. Please try again.");
+      setIsProcessing(false); 
     }
   };
 
@@ -359,7 +380,7 @@ export function StepReview({
               `}
               style={{ fontFamily: 'var(--font-body)' }}
             >
-              {isProcessing ? "Processing Secure Payment..." : "Proceed to Payment"}
+              {isProcessing ? "Connecting to Bank..." : "Proceed to Payment"}
             </button>
           </div>
         </motion.div>

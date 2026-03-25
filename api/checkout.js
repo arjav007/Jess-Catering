@@ -1,39 +1,48 @@
-// api/checkout.js
+import crypto from 'crypto';
 
 export default async function handler(req, res) {
-  // We only want to accept POST requests (since we are sending secure data)
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
 
   try {
-    // 1. Get the cart details sent from your React frontend
-    const { cartTotal, orderDetails } = req.body;
+    const { cartTotal, orderDetails, customerName, customerEmail } = req.body;
 
-    // 2. Securely access your Merchant Warrior keys from your .env file
-    // (These are completely hidden from the browser/frontend)
     const MW_UUID = process.env.MW_MERCHANT_UUID;
-    const MW_API_KEY = process.env.MW_API_KEY;
+    const MW_PASSPHRASE = process.env.MW_API_PASSPHRASE;
 
-    console.log(`Processing $${cartTotal} payment... using UUID: ${MW_UUID}`);
+    if (!MW_UUID || !MW_PASSPHRASE) {
+      console.error("❌ ERROR: Missing API Keys!");
+      return res.status(500).json({ success: false, message: "Missing API keys." });
+    }
 
-    // 3. MOCK PAYMENT GATEWAY DELAY
-    // We are pretending to talk to Merchant Warrior here. It waits 2 seconds.
-    // Once they give you the API keys, we will replace this Promise with the actual Merchant Warrior API call.
-    await new Promise((resolve) => setTimeout(resolve, 2000)); 
+    const formattedAmount = Number(cartTotal).toFixed(2);
 
-    // 4. Send a success response back to React!
+    // Create the secure Hash so Merchant Warrior knows the price wasn't tampered with
+    const stringToHash = `${MW_UUID}${MW_PASSPHRASE}${formattedAmount}`;
+    const securityHash = crypto.createHash('md5').update(stringToHash).digest('hex');
+
+    // Dynamically grab the website URL (works for localhost AND live Vercel)
+    const appUrl = req.headers.origin || 'https://jess-catering.vercel.app'; 
+
+    // Return the exact fields the frontend needs to build the secure checkout form
     return res.status(200).json({
       success: true,
-      message: "Payment successfully authorized by Merchant Warrior sandbox.",
-      transactionId: "MW-TEST-987654321"
+      payPageUrl: 'https://base.merchantwarrior.com/pay/',
+      formFields: {
+        merchantUUID: MW_UUID,
+        transactionAmount: formattedAmount,
+        transactionCurrency: 'AUD',
+        transactionProduct: orderDetails || 'Catering Order',
+        customerName: customerName || '',
+        customerEmail: customerEmail || '',
+        hash: securityHash,
+        returnURL: appUrl // <--- THIS WILL NOW SWITCH AUTOMATICALLY
+      }
     });
 
   } catch (error) {
-    console.error("Payment processing error:", error);
-    return res.status(500).json({ 
-      success: false, 
-      message: "An error occurred while processing the payment." 
-    });
+    console.error("❌ Backend Error:", error);
+    return res.status(500).json({ success: false, message: "Server error generating secure payload." });
   }
 }
