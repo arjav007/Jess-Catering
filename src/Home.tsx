@@ -195,13 +195,15 @@ export default function Home({ onPageChange }: HomeProps) {
             </motion.div>
 
             {/* Card 2 - Chocolates */}
-            <motion.div
+            <motion.a
+              href="https://cocodevenci.com"
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="group cursor-pointer"
-              onClick={() => onPageChange('chocolates-order')}
+              className="group cursor-pointer block"
             >
               <div className="flex flex-col gap-3">
                 <div className="relative overflow-hidden rounded-2xl aspect-[592/288]">
@@ -232,7 +234,7 @@ export default function Home({ onPageChange }: HomeProps) {
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </motion.a>
           </div>
         </div>
       </section>

@@ -60,9 +60,23 @@ export function StepReview({
   const deliveryFee = eventDetails.deliveryType === 'delivery' ? 25 : 0;
   const total = subtotal + deliveryFee;
 
-  /// REAL Payment Handler connecting to Merchant Warrior PayPage
+  // REAL Payment Handler connecting to Merchant Warrior PayPage
   const handlePayment = async () => {
     setIsProcessing(true); 
+
+    // --- NEW LOGIC: Check for Cash Payment ---
+    const isCash = eventDetails.paymentMethod?.toLowerCase().includes('cash');
+
+    if (isCash) {
+      // If paying by cash, skip Merchant Warrior and go straight to confirmation
+      setTimeout(() => {
+        setIsProcessing(false);
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        onProceed(); 
+      }, 600); 
+      return; 
+    }
+    // -----------------------------------------
 
     try {
       const response = await fetch('/api/checkout', {
@@ -78,6 +92,7 @@ export function StepReview({
 
       const data = await response.json();
 
+      // IMPORTANT: We check for formFields here, NOT redirectUrl!
       if (data.success && data.formFields) {
         // 1. Create an invisible HTML form in the background
         const form = document.createElement('form');
@@ -367,7 +382,7 @@ export function StepReview({
               Back to Event Details
             </button>
 
-            {/* Payment Button */}
+            {/* Payment / Confirm Button */}
             <button
               onClick={handlePayment}
               disabled={!isConfirmed || isProcessing}
@@ -380,7 +395,10 @@ export function StepReview({
               `}
               style={{ fontFamily: 'var(--font-body)' }}
             >
-              {isProcessing ? "Connecting to Bank..." : "Proceed to Payment"}
+              {isProcessing 
+                ? (eventDetails.paymentMethod?.toLowerCase().includes('cash') ? "Confirming Order..." : "Connecting to Bank...") 
+                : (eventDetails.paymentMethod?.toLowerCase().includes('cash') ? "Confirm Order" : "Proceed to Payment")
+              }
             </button>
           </div>
         </motion.div>
