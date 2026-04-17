@@ -6,13 +6,14 @@ import Menu from './Menu';
 import About from './About';
 import Contact from './Contact';
 import Order from './Order';
-// 1. Import your beautifully animated confirmation component
+import Cakes from './CakesOrder'; // <-- 1. Imported the new Cakes page
 import { StepConfirmation } from './components/order/StepConfirmation'; 
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'menu' | 'about' | 'contact' | 'order' | 'success'>('home');
+  // 2. Added 'cakes' to the allowed pages here
+  const [currentPage, setCurrentPage] = useState<'home' | 'menu' | 'about' | 'contact' | 'order' | 'success' | 'cakes'>('home');
 
-  // 2. Intercept the Merchant Warrior redirect when the app loads
+  // Intercept the Merchant Warrior redirect when the app loads
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     
@@ -60,7 +61,12 @@ export default function App() {
           />
         )}
 
-        {/* 3. Render YOUR animated component here! */}
+        {/* 3. The New Cakes Page Render Block */}
+        {currentPage === 'cakes' && (
+          <Cakes onPageChange={(page: any) => setCurrentPage(page)} />
+        )}
+
+        {/* Render YOUR animated component here! */}
         {currentPage === 'success' && (
           <StepConfirmation
             onReturnHome={() => setCurrentPage('home')}

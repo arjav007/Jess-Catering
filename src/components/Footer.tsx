@@ -57,7 +57,7 @@ export function Footer() {
                   className="text-[#4B2E20]/70 hover:text-[#D5B36B] transition-colors duration-300 border-b border-transparent hover:border-[#D5B36B]"
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  Parsi Specialties
+                  Appetisers
                 </a>
               </li>
               <li>
@@ -66,7 +66,7 @@ export function Footer() {
                   className="text-[#4B2E20]/70 hover:text-[#D5B36B] transition-colors duration-300 border-b border-transparent hover:border-[#D5B36B]"
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  Indian Snacks
+                  Mains
                 </a>
               </li>
               <li>
@@ -75,7 +75,16 @@ export function Footer() {
                   className="text-[#4B2E20]/70 hover:text-[#D5B36B] transition-colors duration-300 border-b border-transparent hover:border-[#D5B36B]"
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  Catering Menu
+                  Hot Mains
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[#4B2E20]/70 hover:text-[#D5B36B] transition-colors duration-300 border-b border-transparent hover:border-[#D5B36B]"
+                  style={{ fontFamily: 'var(--font-body)' }}
+                >
+                  Deserts
                 </a>
               </li>
             </ul>
@@ -87,7 +96,7 @@ export function Footer() {
               className="mb-4 text-[#6B8A47] text-xl"
               style={{ fontFamily: 'Abhaya Libre SemiBold, serif' }}
             >
-              Chocolates
+              Cakes & Bakes
             </h4>
             <ul className="space-y-2">
               <li>

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { OrderMenuCard } from './OrderMenuCard';
 import { CartSidebar, FloatingCartButton } from './CartSidebar';
 import { ImageLightbox } from '../ImageLightbox';
+import { useOrder } from '../../context/OrderContext';
+import { cakesMenuItems } from '../../CakesOrder';
 
 interface MenuItem {
   id: string;
@@ -19,16 +21,17 @@ interface CartItem {
   name: string;
   price: number;
   quantity: number;
+  category?: 'catering' | 'cakes';
 }
 
 interface StepSelectMenuProps {
   menuItems: MenuItem[];
-  selectedItems: Record<string, number>;
+  selectedItems: Record<string, any>;
   onQuantityChange: (id: string, quantity: number) => void;
   onProceed: () => void;
 }
 
-const categories = ['All', 'Parsi Specialties', 'Indian Snacks', 'Continental', 'Desserts'];
+const categories = ['All', 'Appetisers', 'Mains', 'Hot Mains', 'Desserts'];
 
 export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onProceed }: StepSelectMenuProps) {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -37,6 +40,8 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const { updateQuantity, removeItem } = useOrder();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -67,15 +72,20 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
     ? menuItems
     : menuItems.filter((item) => item.category === activeCategory);
 
-  const cartItems: CartItem[] = Object.entries(selectedItems)
-    .filter(([_, quantity]) => quantity > 0)
-    .map(([id, quantity]) => {
-      const item = menuItems.find((item) => item.id === id);
+  // FIXED: We now combine BOTH menus together so the cart can find the prices!
+  const allMenuItems = [...menuItems, ...cakesMenuItems];
+
+  const cartItems: CartItem[] = Object.entries(selectedItems || {})
+    .filter(([_, item]) => item && item.quantity > 0)
+    .map(([id, item]) => {
+      // FIXED: We search the combined menu instead of just the catering menu
+      const menuItem = allMenuItems.find((m) => m.id === id);
       return {
         id,
-        name: item?.name || '',
-        price: item?.price || 0,
-        quantity,
+        name: menuItem?.name || 'Unknown Item',
+        price: menuItem?.price || 0,
+        quantity: item.quantity,
+        category: item.category,
       };
     });
 
@@ -124,10 +134,10 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
                   <OrderMenuCard
                     key={item.id}
                     item={item}
-                    quantity={selectedItems[item.id] || 0}
+                    quantity={selectedItems[item.id]?.quantity || 0}
                     onQuantityChange={onQuantityChange}
                     layout="vertical"
-                    onImageClick={() => handleImageClick(item, 0)}
+                    onImageClick={(index) => handleImageClick(item, index)}
                   />
                 ))}
 
@@ -150,6 +160,8 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
             <CartSidebar
               items={cartItems}
               onProceed={onProceed}
+              onUpdateQuantity={updateQuantity}
+              onRemoveItem={removeItem}
               isMobile={false}
             />
           </div>
@@ -171,6 +183,8 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
           setIsMobileCartOpen(false);
           onProceed();
         }}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
         isMobile={true}
       />
 

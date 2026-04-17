@@ -13,7 +13,12 @@ import {
 export function ContactForm() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const [formData, setFormData] = useState({
+  
+  // 1. Added a state to manage the button text
+  const [buttonText, setButtonText] = useState('Contact Us');
+  
+  // Renamed to formValues to avoid clashing with the native FormData object
+  const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
     email: '',
@@ -21,17 +26,56 @@ export function ContactForm() {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
+    setFormValues({
+      ...formValues,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // 2. Updated Submit Handler for Web3Forms
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setButtonText('Sending...');
+
+    // Create the payload manually so the email labels are capitalized and pretty
+    const formData = new FormData();
+    formData.append("access_key", "fd0a7abe-b925-4e03-98ff-955eceb062c3");
+    formData.append("subject", "New General Inquiry from Contact Page");
+    formData.append("First Name", formValues.firstName);
+    formData.append("Last Name", formValues.lastName);
+    formData.append("Email", formValues.email);
+    formData.append("Phone Number", formValues.phone);
+    formData.append("Message", formValues.message);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setButtonText("Message Sent!");
+        // Clear the form
+        setFormValues({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
+        // Reset button after 3 seconds
+        setTimeout(() => setButtonText("Contact Us"), 3000);
+      } else {
+        setButtonText("Failed to send");
+        setTimeout(() => setButtonText("Contact Us"), 3000);
+      }
+    } catch (error) {
+      setButtonText("Error sending");
+      setTimeout(() => setButtonText("Contact Us"), 3000);
+    }
   };
 
   return (
@@ -63,7 +107,7 @@ export function ContactForm() {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    value={formData.firstName}
+                    value={formValues.firstName}
                     onChange={handleChange}
                     required
                     placeholder="Enter your first name"
@@ -85,7 +129,7 @@ export function ContactForm() {
                     id="lastName"
                     name="lastName"
                     type="text"
-                    value={formData.lastName}
+                    value={formValues.lastName}
                     onChange={handleChange}
                     required
                     placeholder="Enter your last name"
@@ -108,7 +152,7 @@ export function ContactForm() {
                   id="email"
                   name="email"
                   type="email"
-                  value={formData.email}
+                  value={formValues.email}
                   onChange={handleChange}
                   placeholder="your.email@example.com"
                   className="w-full bg-transparent border-0 border-b-[1.572px] border-[#917E75] py-1 text-[#4B2E20] text-[14px] placeholder:text-[#a8a8a8] focus:outline-none focus:border-[#6B8A47] transition-colors duration-300"
@@ -130,7 +174,7 @@ export function ContactForm() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  value={formData.phone}
+                  value={formValues.phone}
                   onChange={handleChange}
                   required
                   placeholder="0400 000 000"
@@ -151,7 +195,7 @@ export function ContactForm() {
                 <textarea
                   id="message"
                   name="message"
-                  value={formData.message}
+                  value={formValues.message}
                   onChange={handleChange}
                   rows={1}
                   placeholder="Enter your message"
@@ -164,10 +208,15 @@ export function ContactForm() {
               <div className="space-y-4 pt-6">
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#6B8A47] text-white rounded-[10px] hover:bg-[#D5B36B] transition-all duration-300 text-base"
+                  disabled={buttonText === 'Sending...'}
+                  className={`w-full py-4 rounded-[10px] transition-all duration-300 text-base ${
+                    buttonText === 'Message Sent!' 
+                      ? 'bg-[#C49533] text-white' 
+                      : 'bg-[#6B8A47] text-white hover:bg-[#D5B36B]'
+                  }`}
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  Contact Us
+                  {buttonText}
                 </button>
 
                 <p
@@ -299,9 +348,9 @@ export function ContactForm() {
               className="flex gap-4"
             >
               {[
-                { icon: Instagram, href: '#', label: 'Instagram' },
-                { icon: Facebook, href: '#', label: 'Facebook' },
-                { icon: MessageCircle, href: '#', label: 'WhatsApp' },
+                { icon: Instagram, href: 'https://www.instagram.com/jess_catering_services/', label: 'Instagram' },
+                { icon: Facebook, href: 'https://www.facebook.com/JESSCatering/', label: 'Facebook' },
+                { icon: MessageCircle, href: 'https://wa.me/61415282931', label: 'WhatsApp' },
               ].map((social) => {
                 const Icon = social.icon;
                 return (

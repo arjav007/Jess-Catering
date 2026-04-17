@@ -5,7 +5,7 @@ interface ProgressIndicatorProps {
 }
 
 const steps = [
-  { number: 'I', label: 'Select Menu' },
+  { number: 'I', label: 'Select Items' },
   { number: 'II', label: 'Event Details' },
   { number: 'III', label: 'Review' },
   { number: 'IV', label: 'Confirm' },
@@ -13,13 +13,12 @@ const steps = [
 
 export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
   return (
-    // Kept pt-8 md:pt-10 to prevent the navbar from cutting off the top circles
-    <div className="bg-[#F9F7F4] border-b border-[#D5B36B]/20 py-4 mt-8 md:mt-10 pb-4 px-4 md:px-16">
+    <div className="bg-[#F9F7F4] border-b border-[#D5B36B]/20 py-4 px-16">
       <div className="max-w-7xl mx-auto">
         {/* Desktop Progress Bar */}
         <div className="hidden md:block">
           <div className="relative">
-            {/* Background Line - Reverted to standard top-6 to perfectly center it */}
+            {/* Background Line */}
             <div className="absolute top-6 left-0 right-0 h-[2px] bg-[rgba(213,179,107,0.3)]" />
 
             {/* Steps */}
@@ -28,45 +27,37 @@ export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
                 const stepNumber = index + 1;
                 const isActive = stepNumber === currentStep;
                 const isPast = stepNumber < currentStep;
-
-                // Determine colors based on step status
-                let circleClasses = 'bg-white border-2 border-[rgba(213,179,107,0.4)]';
-                let textClasses = 'text-[#6e564a]';
-                let labelClasses = 'text-[#6e564a]';
-
-                if (isActive) {
-                  // Current Step: Green
-                  circleClasses = 'bg-[#6B8A47] border-2 border-[#6B8A47]'; 
-                  textClasses = 'text-white';
-                  labelClasses = 'text-[#6B8A47] font-medium';
-                } else if (isPast) {
-                  // Completed Steps: Gold Hex
-                  circleClasses = 'bg-[#C49533] border-2 border-[#C49533]'; 
-                  textClasses = 'text-white';
-                  labelClasses = 'text-[#C49533]';
-                }
+                const isFuture = stepNumber > currentStep;
 
                 return (
-                  // Reverted this wrapper back to its original clean state
                   <div key={step.number} className="flex flex-col items-center gap-2">
                     <motion.div
                       className={`
-                        w-[50px] h-[50px] rounded-full flex items-center justify-center relative z-10
-                        transition-all duration-300 ${circleClasses}
+                        w-[50px] h-[50px] rounded-full flex items-center justify-center
+                        transition-all duration-300
+                        ${isActive ? 'bg-[#6B8A47]' : 'bg-white border-2 border-[rgba(213,179,107,0.4)]'}
                       `}
                       initial={{ scale: 0.8 }}
-                      animate={{ scale: 1 }}
+                      animate={{ 
+                        scale: isActive ? 1 : 1,
+                      }}
                       transition={{ duration: 0.3 }}
                     >
                       <span
-                        className={`transition-colors duration-300 ${textClasses}`}
+                        className={`
+                          transition-colors duration-300
+                          ${isActive ? 'text-white' : 'text-[#6e564a]'}
+                        `}
                         style={{ fontFamily: 'var(--font-heading)', fontSize: '1.125rem', lineHeight: '27px' }}
                       >
                         {step.number}
                       </span>
                     </motion.div>
                     <p
-                      className={`text-sm transition-colors duration-300 ${labelClasses}`}
+                      className={`
+                        text-sm transition-colors duration-300
+                        ${isActive ? 'text-[#6B8A47]' : 'text-[#6e564a]'}
+                      `}
                       style={{ fontFamily: 'var(--font-body)', lineHeight: '20px' }}
                     >
                       {step.label}
@@ -83,8 +74,7 @@ export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
           <div className="flex items-center justify-between mb-3">
             <div className="flex-1 h-1 bg-[#D5B36B]/30 rounded-full overflow-hidden">
               <motion.div
-                // Mobile gradient includes the new Gold Hex
-                className="h-full bg-gradient-to-r from-[#C49533] to-[#6B8A47]"
+                className="h-full bg-gradient-to-r from-[#D5B36B] to-[#6B8A47]"
                 initial={{ width: '0%' }}
                 animate={{ width: `${(currentStep / steps.length) * 100}%` }}
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
@@ -98,7 +88,7 @@ export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
             </span>
           </div>
           <p
-            className="text-center text-[#6B8A47] font-medium"
+            className="text-center text-[#6B8A47]"
             style={{ fontFamily: 'var(--font-body)' }}
           >
             {steps[currentStep - 1].label}

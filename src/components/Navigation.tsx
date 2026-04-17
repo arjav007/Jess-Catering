@@ -2,15 +2,17 @@ import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react@0.487.0';
 import { useState } from 'react';
 
+// 1. Added 'cakes' to the TypeScript Interfaces
 interface NavigationProps {
-  currentPage: 'home' | 'menu' | 'about' | 'contact' | 'order';
-  onPageChange: (page: 'home' | 'menu' | 'about' | 'contact' | 'order') => void;
+  currentPage: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes';
+  onPageChange: (page: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes') => void;
 }
 
 export function Navigation({ currentPage, onPageChange }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleNavClick = (page: 'home' | 'menu' | 'about' | 'contact' | 'order') => {
+  // 2. Added 'cakes' to the allowed click handler parameters
+  const handleNavClick = (page: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes') => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     onPageChange(page);
     setIsMobileMenuOpen(false);
@@ -79,7 +81,25 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
-          {/* UPDATED LINK HERE */}
+          {/* 3. NEW: Cakes & Bakes Link (Desktop) */}
+          <button
+            onClick={() => handleNavClick('cakes')}
+            className="relative"
+          >
+            <span
+              className={`text-sm md:text-base transition-colors duration-300 ${
+                currentPage === 'cakes'
+                  ? 'text-[#6B8A47] font-semibold'
+                  : 'text-[#6E564A] hover:text-[#D5B36B]'
+              }`}
+              style={{ fontFamily: 'var(--font-body)' }}
+            >
+              <span className="hidden lg:inline">Cakes & Bakes</span>
+              <span className="lg:hidden">Cakes</span>
+            </span>
+          </button>
+
+          {/* Existing Chocolates Order Link */}
           <a
             href="https://cocodevenci.com"
             target="_blank"
@@ -166,7 +186,25 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
-          {/* UPDATED LINK HERE */}
+          {/* 4. NEW: Cakes & Bakes Link (Mobile) */}
+          <button
+            onClick={() => handleNavClick('cakes')}
+            className="relative"
+          >
+            <span
+              className={`text-sm md:text-base transition-colors duration-300 ${
+                currentPage === 'cakes'
+                  ? 'text-[#6B8A47] font-semibold'
+                  : 'text-[#6E564A] hover:text-[#D5B36B]'
+              }`}
+              style={{ fontFamily: 'var(--font-body)' }}
+            >
+              <span className="hidden lg:inline">Cakes & Bakes</span>
+              <span className="lg:hidden">Cakes</span>
+            </span>
+          </button>
+
+          {/* Existing Chocolates Order Link */}
           <a
             href="https://cocodevenci.com"
             target="_blank"

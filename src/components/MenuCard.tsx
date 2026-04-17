@@ -151,7 +151,7 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
             className="text-xl leading-[28px] text-[#C49533]"
             style={{ fontFamily: 'var(--font-body)' }}
           >
-            {price}
+            A${price}
           </p>
         </div>
       </div>

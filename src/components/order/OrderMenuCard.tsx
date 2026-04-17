@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
-import { Plus, Minus } from 'lucide-react@0.487.0';
+// Added ChevronLeft and ChevronRight to your imports
+import { Plus, Minus, ChevronLeft, ChevronRight } from 'lucide-react@0.487.0';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { useState } from 'react';
 
@@ -22,6 +23,10 @@ interface OrderMenuCardProps {
 }
 
 export function OrderMenuCard({ item, quantity, onQuantityChange, layout = 'vertical', onImageClick }: OrderMenuCardProps) {
+  // Added hover state for the arrows
+  const [isHovered, setIsHovered] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const handleIncrement = () => {
     onQuantityChange(item.id, quantity + 1);
   };
@@ -31,8 +36,6 @@ export function OrderMenuCard({ item, quantity, onQuantityChange, layout = 'vert
       onQuantityChange(item.id, quantity - 1);
     }
   };
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleImageChange = (direction: 'next' | 'prev') => {
     if (direction === 'next') {
@@ -155,22 +158,60 @@ export function OrderMenuCard({ item, quantity, onQuantityChange, layout = 'vert
       exit={{ opacity: 0, y: -20 }}
       className="flex flex-col items-start w-full transition-all duration-300"
     >
-      {/* Image */}
-      <div className="relative w-full h-[288px] overflow-clip rounded-[14px] group cursor-pointer" onClick={onImageClick}>
+      {/* Image Container */}
+      <div 
+        className="relative w-full h-[288px] overflow-clip rounded-[14px] group cursor-pointer" 
+        onClick={onImageClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <ImageWithFallback
           src={item.images[currentImageIndex]}
           alt={item.name}
           className="w-full h-full object-cover rounded-[14px] transition-transform duration-300 group-hover:scale-105"
         />
+
+        {/* Hover Navigation Arrows */}
+        {item.images.length > 1 && (
+          <>
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevents opening the lightbox when clicking the arrow
+                handleImageChange('prev');
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-[#6B8A47] text-white transition-all duration-300 z-10"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </motion.button>
+
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevents opening the lightbox when clicking the arrow
+                handleImageChange('next');
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-[#6B8A47] text-white transition-all duration-300 z-10"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </motion.button>
+          </>
+        )}
         
-        {/* Image indicators */}
+        {/* Image indicators (Dots) */}
         {item.images.length > 1 && (
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
             {item.images.map((_, index) => (
               <button
                 key={index}
                 onClick={(e) => {
-                  e.stopPropagation();
+                  e.stopPropagation(); // Prevents opening the lightbox when clicking the dot
                   setCurrentImageIndex(index);
                 }}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -217,7 +258,7 @@ export function OrderMenuCard({ item, quantity, onQuantityChange, layout = 'vert
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleIncrement}
-              className="px-6 py-[6px] border border-[#6B8A47] bg-transparent text-[#6B8A47] rounded-[10px] transition-colors duration-300"
+              className="px-6 py-[6px] border border-[#6B8A47] bg-transparent text-[#6B8A47] rounded-[10px] transition-colors duration-300 hover:bg-[#6B8A47] hover:text-white"
               style={{ fontFamily: 'var(--font-body)', fontSize: '16px', lineHeight: '24px' }}
             >
               Add
