@@ -2,7 +2,6 @@ import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react@0.487.0';
 import { useState } from 'react';
 
-// 1. Added 'cakes' to the TypeScript Interfaces
 interface NavigationProps {
   currentPage: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes';
   onPageChange: (page: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes') => void;
@@ -11,7 +10,6 @@ interface NavigationProps {
 export function Navigation({ currentPage, onPageChange }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // 2. Added 'cakes' to the allowed click handler parameters
   const handleNavClick = (page: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes') => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     onPageChange(page);
@@ -81,7 +79,7 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
-          {/* 3. NEW: Cakes & Bakes Link (Desktop) */}
+          {/* Cakes & Bakes Link (Desktop) */}
           <button
             onClick={() => handleNavClick('cakes')}
             className="relative"
@@ -132,6 +130,17 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
+          {/* UPDATED: Increased padding (px-6 py-3.5) to match the Contact Us button height/spacing */}
+          <a
+            href="https://classbento.com.au/2rj2u5t5zwau-widget?wtn=2rj2u5t5zwau&is_preview=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-4 border border-[#6B8A47] text-[#6B8A47] rounded-lg hover:bg-[#6B8A47]/5 transition-all duration-300 text-sm md:text-base font-medium"
+            style={{ fontFamily: 'var(--font-body)' }}
+          >
+            Baking Classes
+          </a>
+
           <button
             onClick={() => handleNavClick('contact')}
             className={`px-6 py-4 rounded-lg transition-all duration-300 text-sm md:text-base ${
@@ -152,7 +161,7 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
           isMobileMenuOpen ? 'block' : 'hidden'
         } absolute top-[52px] md:top-[60px] left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-[#6B8A47]/20 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-16 py-4 flex flex-col items-center gap-4 md:gap-6 lg:gap-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-16 py-6 flex flex-col items-center gap-5 md:gap-6 lg:gap-8">
           <button
             onClick={() => handleNavClick('menu')}
             className="relative"
@@ -186,7 +195,7 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
-          {/* 4. NEW: Cakes & Bakes Link (Mobile) */}
+          {/* Cakes & Bakes Link (Mobile) */}
           <button
             onClick={() => handleNavClick('cakes')}
             className="relative"
@@ -237,9 +246,21 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             </span>
           </button>
 
+          {/* UPDATED: Increased padding (px-8 py-4) to match mobile Contact Us button */}
+          <a
+            href="https://classbento.com.au/2rj2u5t5zwau-widget?wtn=2rj2u5t5zwau&is_preview=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="px-8 py-4 border border-[#6B8A47] text-[#6B8A47] rounded-lg hover:bg-[#6B8A47]/5 transition-all duration-300 text-sm md:text-base font-medium w-full text-center sm:w-auto"
+            style={{ fontFamily: 'var(--font-body)' }}
+          >
+            Baking Classes
+          </a>
+
           <button
             onClick={() => handleNavClick('contact')}
-            className={`px-6 py-4 rounded-lg transition-all duration-300 text-sm md:text-base ${
+            className={`px-8 py-4 mt-2 rounded-lg transition-all duration-300 text-sm md:text-base w-full sm:w-auto ${
               currentPage === 'contact'
                 ? 'bg-[#6B8A47] text-white'
                 : 'bg-[#6B8A47] text-white hover:bg-[#D5B36B]'
