@@ -159,7 +159,7 @@ export function EnquiryFormPopup({ isOpen, onClose }: EnquiryFormPopupProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  // THE FIX: Web3Forms Integration
+  // Web3Forms Integration
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -168,16 +168,13 @@ export function EnquiryFormPopup({ isOpen, onClose }: EnquiryFormPopupProps) {
     setSubmitStatus('idle');
 
     try {
-      // 1. Create a native FormData object (Required for file uploads in Web3Forms)
       const formDataToSend = new window.FormData();
       
-      // 2. Add API Key & Basic Settings
       formDataToSend.append('access_key', 'fd0a7abe-b925-4e03-98ff-955eceb062c3');
       formDataToSend.append('subject', `New Custom Cake Enquiry from ${formData.name}`);
       formDataToSend.append('from_name', formData.name);
       formDataToSend.append('email', formData.email);
 
-      // 3. Construct a beautiful, readable message for your email inbox
       const messageBody = `
 New Custom Cake Enquiry Details:
 
@@ -203,12 +200,10 @@ ${formData.designBrief || 'No design brief provided.'}
       
       formDataToSend.append('message', messageBody);
 
-      // 4. Attach the Inspiration Images
       formData.inspirationImages.forEach((file) => {
         formDataToSend.append('attachment', file);
       });
 
-      // 5. Send to Web3Forms API
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formDataToSend,
@@ -241,7 +236,6 @@ ${formData.designBrief || 'No design brief provided.'}
     }
   };
 
-  // Don't render until client-side mounted (Next.js SSR safety)
   if (!mounted) return null;
 
   const modalContent = (
@@ -368,111 +362,112 @@ ${formData.designBrief || 'No design brief provided.'}
                     </div>
                   </div>
 
-                  {/* Pickup/Delivery */}
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Pickup/Delivery (FIXED TO MATCH YOUR WORKING LOGIC) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
+                    <div className="flex flex-col gap-2">
+                      <Label className="text-[rgba(75,46,32,0.6)] font-medium text-sm tracking-[0.6px]" style={{ fontFamily: 'var(--font-body)' }}>
+                        Pickup or Delivery <span className="text-red-600">*</span>
+                      </Label>
+                      <Select 
+                        value={formData.pickupOrDelivery || undefined} 
+                        onValueChange={(value) => handleChange("pickupOrDelivery", value)}
+                      >
+                        <SelectTrigger className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 h-9 text-sm focus:ring-0 focus:ring-offset-0">
+                          <SelectValue placeholder="Select option" />
+                        </SelectTrigger>
+                        
+                        {/* THE FIX: Inline style guarantees the z-index works, ignoring Tailwind compiler issues */}
+                        <SelectContent style={{ zIndex: 999999 }}>
+                          <SelectItem value="pickup">Pickup</SelectItem>
+                          <SelectItem value="delivery">Delivery</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      
+                      {errors.pickupOrDelivery && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.pickupOrDelivery}
+                        </p>
+                      )}
+                    </div>
 
-<div className="flex flex-col gap-1.5">
-  <Label className="text-[#4B2E20]/80 font-medium text-sm tracking-wide">
-    Pickup or Delivery <span className="text-red-500">*</span>
-  </Label>
-
-  <Select
-    value={formData.pickupOrDelivery || ""}
-    onValueChange={(value) => handleChange("pickupOrDelivery", value)}
-  >
-    <SelectTrigger
-      className={`bg-transparent border-0 border-b-2 rounded-none px-0 py-2 h-10 text-base focus:ring-0 focus:ring-offset-0 transition-colors ${
-        errors.pickupOrDelivery ? "border-red-500" : "border-[#D5B36B]"
-      }`}
-    >
-      <SelectValue placeholder="Select option" />
-    </SelectTrigger>
-
-    <SelectContent>
-      <SelectItem value="pickup">Pickup</SelectItem>
-      <SelectItem value="delivery">Delivery</SelectItem>
-    </SelectContent>
-  </Select>
-
-  {errors.pickupOrDelivery && (
-    <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
-      <AlertCircle className="w-3 h-3" />
-      {errors.pickupOrDelivery}
-    </p>
-  )}
-</div>
-
-{formData.pickupOrDelivery === "delivery" && (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    className="flex flex-col gap-1.5"
-  >
-    <Label
-      htmlFor="enquiry-deliveryAddress"
-      className="text-[#4B2E20]/80 font-medium text-sm tracking-wide"
-    >
-      Delivery Address
-    </Label>
-
-    <Input
-      id="enquiry-deliveryAddress"
-      value={formData.deliveryAddress}
-      onChange={(e) =>
-        handleChange("deliveryAddress", e.target.value)
-      }
-      placeholder="Enter delivery address"
-      className="bg-transparent border-0 border-b-2 border-[#D5B36B] rounded-none px-0 py-2 text-base focus-visible:ring-0 focus-visible:border-[#6B8A47] placeholder:text-[#a8a8a8] transition-colors"
-    />
-  </motion.div>
-)}
-</div>
+                    {formData.pickupOrDelivery === "delivery" && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="flex flex-col gap-2"
+                      >
+                        <Label
+                          htmlFor="enquiry-deliveryAddress"
+                          className="text-[rgba(75,46,32,0.6)] font-medium text-sm tracking-[0.6px]" style={{ fontFamily: 'var(--font-body)' }}
+                        >
+                          Delivery Address
+                        </Label>
+                        <Input
+                          id="enquiry-deliveryAddress"
+                          value={formData.deliveryAddress}
+                          onChange={(e) => handleChange("deliveryAddress", e.target.value)}
+                          placeholder="Enter delivery address"
+                          className="bg-transparent border-0 border-b-[1.6px] border-[#917e75] rounded-none px-0 py-1 h-9 text-sm focus-visible:ring-0 placeholder:text-[#a8a8a8]"
+                        />
+                      </motion.div>
+                    )}
+                  </div>
 
                   {/* Items Required */}
-                  <div className="flex flex-col gap-2 pt-2">
-                    <Label className="text-[#4B2E20]/80 font-medium text-sm tracking-wide">
-                      Items Required <span className="text-red-500">*</span>
+                  <div className="flex flex-col gap-2 pt-2 relative z-20">
+                    <Label className="text-[rgba(75,46,32,0.6)] font-medium text-sm tracking-[0.6px]" style={{ fontFamily: 'var(--font-body)' }}>
+                      Items Required <span className="text-red-600">*</span>
                     </Label>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-4 mt-1 bg-white/40 p-4 rounded-xl border border-[#D5B36B]/30">
-                      {itemOptions.map((item) => (
-                        <div key={item} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`item-${item.replace(/\s+/g, '-')}`}
-                            checked={formData.itemsRequired.includes(item)}
-                            onCheckedChange={(checked) => handleCheckboxChange(item, checked === true)}
-                            className="border-[#6B8A47] data-[state=checked]:bg-[#6B8A47]"
-                          />
-                          <label htmlFor={`item-${item.replace(/\s+/g, '-')}`} className="text-sm text-[#4B2E20] cursor-pointer hover:text-[#6B8A47] transition-colors">
-                            {item}
-                          </label>
-                        </div>
-                      ))}
+                      {itemOptions.map((item) => {
+                        // FIX 1: Added 'enquiry-modal-' prefix to guarantee a 100% unique ID across the entire page
+                        const itemId = `enquiry-modal-item-${item.replace(/\s+/g, '-')}`;
+                        return (
+                          <div key={item} className="flex items-center gap-2">
+                            <Checkbox
+                              id={itemId}
+                              checked={formData.itemsRequired.includes(item)}
+                              onCheckedChange={(checked) => handleCheckboxChange(item, checked === true)}
+                              // FIX 2: Added data-[state=checked]:text-white to ensure the checkmark icon is visible
+                              className="border-[#6B8A47] data-[state=checked]:bg-[#6B8A47] data-[state=checked]:text-white"
+                            />
+                            <label htmlFor={itemId} className="text-sm text-[#4B2E20] cursor-pointer hover:text-[#6B8A47] transition-colors leading-none pt-0.5">
+                              {item}
+                            </label>
+                          </div>
+                        );
+                      })}
                     </div>
                     {errors.itemsRequired && <p className="text-red-500 text-xs mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.itemsRequired}</p>}
                   </div>
 
                   {/* Dietary Requirements */}
-                  <div className="flex flex-col gap-2">
-                    <Label className="text-[#4B2E20]/80 font-medium text-sm tracking-wide">
+                  <div className="flex flex-col gap-2 relative z-20">
+                    <Label className="text-[rgba(75,46,32,0.6)] font-medium text-sm tracking-[0.6px]" style={{ fontFamily: 'var(--font-body)' }}>
                       Dietary Requirements
                     </Label>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-4 mt-1 bg-white/40 p-4 rounded-xl border border-[#D5B36B]/30">
-                      {dietaryOptions.map((dietary) => (
-                        <div key={dietary} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`dietary-${dietary.replace(/\s+/g, '-')}`}
-                            checked={formData.dietaryRequirements.includes(dietary)}
-                            onCheckedChange={(checked) => handleDietaryCheckboxChange(dietary, checked === true)}
-                            className="border-[#6B8A47] data-[state=checked]:bg-[#6B8A47]"
-                          />
-                          <label htmlFor={`dietary-${dietary.replace(/\s+/g, '-')}`} className="text-sm text-[#4B2E20] cursor-pointer hover:text-[#6B8A47] transition-colors">
-                            {dietary}
-                          </label>
-                        </div>
-                      ))}
+                      {dietaryOptions.map((dietary) => {
+                        // FIX 1: Added 'enquiry-modal-' prefix here too!
+                        const dietaryId = `enquiry-modal-dietary-${dietary.replace(/\s+/g, '-')}`;
+                        return (
+                          <div key={dietary} className="flex items-center gap-2">
+                            <Checkbox
+                              id={dietaryId}
+                              checked={formData.dietaryRequirements.includes(dietary)}
+                              onCheckedChange={(checked) => handleDietaryCheckboxChange(dietary, checked === true)}
+                              // FIX 2: Added data-[state=checked]:text-white
+                              className="border-[#6B8A47] data-[state=checked]:bg-[#6B8A47] data-[state=checked]:text-white"
+                            />
+                            <label htmlFor={dietaryId} className="text-sm text-[#4B2E20] cursor-pointer hover:text-[#6B8A47] transition-colors leading-none pt-0.5">
+                              {dietary}
+                            </label>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-
                   {/* Number of Servings */}
                   <div className="flex flex-col gap-1.5 pt-2">
                     <Label htmlFor="enquiry-noOfServings" className="text-[#4B2E20]/80 font-medium text-sm tracking-wide">

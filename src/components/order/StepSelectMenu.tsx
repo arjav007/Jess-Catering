@@ -31,7 +31,7 @@ interface StepSelectMenuProps {
   onProceed: () => void;
 }
 
-const categories = ['All', 'Appetisers', 'Mains', 'Hot Mains', 'Desserts'];
+const categories = ['All', 'Packages', 'Appetisers', 'Mains', 'Hot Mains', 'Desserts'];
 
 export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onProceed }: StepSelectMenuProps) {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -50,9 +50,16 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleImageClick = (item: MenuItem, imageIndex: number) => {
+  // FIX: This function now accepts the string URL passed from OrderMenuCard.tsx
+  // and correctly calculates the index so the Lightbox doesn't crash!
+  const handleImageClick = (item: MenuItem, clickedImageUrl: string) => {
     setSelectedDish(item);
-    setCurrentImageIndex(imageIndex);
+    
+    // Find what position this image holds in the item's array
+    const imageIndex = item.images.findIndex((img) => img === clickedImageUrl);
+    
+    // If we found it, use it! Otherwise default to the first image (0)
+    setCurrentImageIndex(imageIndex !== -1 ? imageIndex : 0);
     setLightboxOpen(true);
   };
 
@@ -72,13 +79,11 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
     ? menuItems
     : menuItems.filter((item) => item.category === activeCategory);
 
-  // FIXED: We now combine BOTH menus together so the cart can find the prices!
   const allMenuItems = [...menuItems, ...cakesMenuItems];
 
   const cartItems: CartItem[] = Object.entries(selectedItems || {})
     .filter(([_, item]) => item && item.quantity > 0)
     .map(([id, item]) => {
-      // FIXED: We search the combined menu instead of just the catering menu
       const menuItem = allMenuItems.find((m) => m.id === id);
       return {
         id,
@@ -137,7 +142,8 @@ export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onP
                     quantity={selectedItems[item.id]?.quantity || 0}
                     onQuantityChange={onQuantityChange}
                     layout="vertical"
-                    onImageClick={(index) => handleImageClick(item, index)}
+                    // FIX: Pass the item and the string URL up to our fixed handler
+                    onImageClick={(imageUrl) => handleImageClick(item, imageUrl)}
                   />
                 ))}
 
