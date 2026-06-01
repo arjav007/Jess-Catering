@@ -9,103 +9,297 @@ import { StepCakesReview } from './components/cakes/StepCakesReview';
 import { StepCakesConfirmation } from './components/cakes/StepCakesConfirmation';
 import { Footer } from './components/Footer';
 
-// FIXED: Removed "export" so Vite Fast Refresh doesn't crash anymore!
+// ---------------------------------------------------------
+// IMAGE IMPORTS (CLEAN, SHORT NAMES - ALL .PNG)
+// ---------------------------------------------------------
+
+// Wedding Cakes (8 items)
+import wcButterscotch from './assets/modern-butterscotch.png';
+import wcClassic2Tier from './assets/classic-2-tier.png';
+import wcLemonChoc from './assets/lemon-chocolate.png';
+import wcMidnightBerry from './assets/midnight-berry.png';
+import wcSingleLayer from './assets/single-layer.png';
+import wcClassicSingle from './assets/classic-single.png';
+import wcSummerFlowers from './assets/summer-flowers.png';
+import wcChocMousse from './assets/chocolate-mousse-cake.png';
+
+// Celebration Cakes (17 items)
+import ccOrangeAlmond from './assets/orange-almond.png';
+import ccCarrotCake from './assets/carrot-cake.png';
+import ccCaramelFantasy from './assets/caramel-fantasy.png';
+import ccBurnCake from './assets/burn-cake.png';
+import ccChocStrawberry from './assets/chocolate-strawberry.png';
+import ccClassicBlackForest from './assets/classic-black-forest.png';
+import ccVanillaCake from './assets/vanilla-cake.png';
+import ccHeartCake from './assets/heart-cake.png';
+import ccModernBlackForest from './assets/modern-black-forest.png';
+import ccChocCake from './assets/chocolate-cake.png';
+import ccPistachioDelight from './assets/pistachio-delight.png';
+import ccWaferpaperSails from './assets/waferpaper-sails.png';
+import ccTwoTonedHeart from './assets/two-toned-heart.png';
+import ccWaterColour from './assets/water-colour.png';
+import ccHazelnutPraline from './assets/hazelnut-praline.png';
+import ccChocGlaze from './assets/chocolate-glaze.png';
+import ccTwoTierBirthday from './assets/two-tier-birthday.png';
+
+// Cupcakes (5 items)
+import cupGourmet from './assets/gourmet-cupcakes.png';
+import cupRegular from './assets/regular-cupcakes.png';
+import cupMini from './assets/mini-cupcakes.png';
+import cupHydrangeas from './assets/floral-hydrangeas.png';
+import cupRosette from './assets/floral-rosette.png';
+
 export const cakesMenuItems = [
+  // ---------------------------------------------------------
+  // WEDDING CAKES (8 Items)
+  // ---------------------------------------------------------
   {
-    id: 'cake-1',
-    name: 'Chocolate Ganache Cake',
-    description: 'Rich chocolate layers with smooth ganache frosting',
-    price: 55,
-    category: 'Cakes',
-    images: ['https://images.unsplash.com/photo-1640794334523-b299f14d28db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9jb2xhdGUlMjBjYWtlJTIwbHV4dXJpb3VzfGVufDF8fHx8MTc3NTI4NTc2NHww&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-1',
+    name: 'Modern Wedding Cake - Butterscotch',
+    description: 'Elegant modern wedding cake in butterscotch.',
+    price: 645.00,
+    category: 'Wedding Cakes',
+    images: [wcButterscotch],
   },
   {
-    id: 'cake-2',
-    name: 'Wedding Cake',
-    description: 'Elegant multi-tiered cake customized for your special day',
-    price: 250,
-    category: 'Cakes',
-    images: ['https://images.unsplash.com/photo-1584158531319-96912adae663?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY2FrZSUyMGVsZWdhbnR8ZW58MXx8fHwxNzc1Mjg1NzY1fDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-2',
+    name: 'Classic 2 Tier Wedding Cake',
+    description: 'Vanilla with Baileys & Chocolate with Raspberries.',
+    price: 500.00,
+    category: 'Wedding Cakes',
+    images: [wcClassic2Tier],
   },
   {
-    id: 'cake-3',
-    name: 'Artisan Pastries',
-    description: 'Selection of handcrafted French pastries',
-    price: 35,
-    category: 'Pastries',
-    images: ['https://images.unsplash.com/photo-1759303380841-55c09244fd2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY2FrZSUyMHBhc3RyeXxlbnwxfHx8fDE3NzUyODU3NjR8MA&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-3',
+    name: '2 Tiered Wedding Cake - Lemon & Chocolate',
+    description: 'Beautiful 2 tiered cake featuring lemon and chocolate.',
+    price: 500.00,
+    category: 'Wedding Cakes',
+    images: [wcLemonChoc],
   },
   {
-    id: 'cake-4',
-    name: 'Gourmet Cupcakes',
-    description: 'Colorful cupcakes with premium toppings',
-    price: 28,
-    category: 'Cupcakes',
-    images: ['https://images.unsplash.com/photo-1680580735621-4371027734eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXBjYWtlcyUyMGNvbG9yZnVsfGVufDF8fHx8MTc3NTI4NTc2NXww&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-4',
+    name: 'Midnight Berry Lux',
+    description: 'Chocolate Cake with Blackberry Balsamic Mousse filling.',
+    price: 280.00,
+    category: 'Wedding Cakes',
+    images: [wcMidnightBerry],
   },
   {
-    id: 'cake-5',
-    name: 'Red Velvet Cake',
-    description: 'Classic red velvet with cream cheese frosting',
-    price: 48,
-    category: 'Cakes',
-    images: ['https://images.unsplash.com/photo-1640794334523-b299f14d28db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9jb2xhdGUlMjBjYWtlJTIwbHV4dXJpb3VzfGVufDF8fHx8MTc3NTI4NTc2NHww&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-5',
+    name: 'Single Layer Wedding Cake',
+    description: 'Beautiful and elegant single layer wedding cake.',
+    price: 250.00,
+    category: 'Wedding Cakes',
+    images: [wcSingleLayer],
   },
   {
-    id: 'cake-6',
-    name: 'Lemon Tart',
-    description: 'Zesty lemon filling in buttery shortcrust pastry',
-    price: 32,
-    category: 'Pastries',
-    images: ['https://images.unsplash.com/photo-1759303380841-55c09244fd2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY2FrZSUyMHBhc3RyeXxlbnwxfHx8fDE3NzUyODU3NjR8MA&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-6',
+    name: 'Classic Single Layer Wedding Cake',
+    description: 'Classic, timeless single layer wedding cake.',
+    price: 250.00,
+    category: 'Wedding Cakes',
+    images: [wcClassicSingle],
   },
   {
-    id: 'cake-7',
-    name: 'Vanilla Bean Cake',
-    description: 'Light vanilla sponge with Madagascar vanilla buttercream',
-    price: 45,
-    category: 'Cakes',
-    images: ['https://images.unsplash.com/photo-1584158531319-96912adae663?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY2FrZSUyMGVsZWdhbnR8ZW58MXx8fHwxNzc1Mjg1NzY1fDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-7',
+    name: 'Summer Flowers - Chocolate & Orange',
+    description: 'Beautiful summer flower decor over chocolate & orange cake.',
+    price: 250.00,
+    category: 'Wedding Cakes',
+    images: [wcSummerFlowers],
   },
   {
-    id: 'cake-8',
-    name: 'Croissants',
-    description: 'Buttery, flaky French croissants baked fresh',
-    price: 22,
-    category: 'Pastries',
-    images: ['https://images.unsplash.com/photo-1759303380841-55c09244fd2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY2FrZSUyMHBhc3RyeXxlbnwxfHx8fDE3NzUyODU3NjR8MA&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'wc-8',
+    name: 'Chocolate Mousse Cake',
+    description: 'Rich, airy, and decadent chocolate mousse cake.',
+    price: 210.00,
+    category: 'Wedding Cakes',
+    images: [wcChocMousse],
+  },
+
+  // ---------------------------------------------------------
+  // CELEBRATION CAKES (17 Items)
+  // ---------------------------------------------------------
+  {
+    id: 'cc-1',
+    name: 'Two Tiered Birthday Cake',
+    description: 'Grand two-tiered celebration birthday cake.',
+    price: 538.00,
+    category: 'Celebration Cakes',
+    images: [ccTwoTierBirthday],
   },
   {
-    id: 'cake-9',
-    name: 'Mini Cupcakes',
-    description: 'Assorted mini cupcakes perfect for parties',
-    price: 18,
-    category: 'Cupcakes',
-    images: ['https://images.unsplash.com/photo-1680580735621-4371027734eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXBjYWtlcyUyMGNvbG9yZnVsfGVufDF8fHx8MTc3NTI4NTc2NXww&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'cc-2',
+    name: 'Chocolate & Hazelnut Praline Mousse Cake',
+    description: 'Luxurious chocolate and hazelnut praline mousse.',
+    price: 280.00,
+    category: 'Celebration Cakes',
+    images: [ccHazelnutPraline],
   },
   {
-    id: 'cake-10',
+    id: 'cc-3',
+    name: 'Chocolate Cake with Chocolate Glaze',
+    description: 'Rich chocolate cake coated in a mirror chocolate glaze.',
+    price: 280.00,
+    category: 'Celebration Cakes',
+    images: [ccChocGlaze],
+  },
+  {
+    id: 'cc-4',
+    name: 'Modern Water Colour Effect',
+    description: 'Artistic modern water colour effect cake.',
+    price: 270.00,
+    category: 'Celebration Cakes',
+    images: [ccWaterColour],
+  },
+  {
+    id: 'cc-5',
+    name: 'Two Toned Heart',
+    description: 'Stunning two-toned heart design celebration cake.',
+    price: 265.00,
+    category: 'Celebration Cakes',
+    images: [ccTwoTonedHeart],
+  },
+  {
+    id: 'cc-6',
+    name: 'Modern Waferpaper Sails - Chocolate Decadence',
+    description: 'Chocolate decadence with modern waferpaper sail decor.',
+    price: 225.00,
+    category: 'Celebration Cakes',
+    images: [ccWaferpaperSails],
+  },
+  {
+    id: 'cc-7',
+    name: 'Chocolate Cake',
+    description: 'Ultimate rich chocolate celebration cake.',
+    price: 210.00,
+    category: 'Celebration Cakes',
+    images: [ccChocCake],
+  },
+  {
+    id: 'cc-8',
+    name: 'Pistachio Delight',
+    description: 'Elegant pistachio flavored celebration cake.',
+    price: 210.00,
+    category: 'Celebration Cakes',
+    images: [ccPistachioDelight],
+  },
+  {
+    id: 'cc-9',
+    name: 'Heart Cake',
+    description: 'Beautiful heart-shaped celebration cake.',
+    price: 190.00,
+    category: 'Celebration Cakes',
+    images: [ccHeartCake],
+  },
+  {
+    id: 'cc-10',
+    name: 'Modern Black Forest Cake',
+    description: 'A modern twist on the classic black forest.',
+    price: 190.00,
+    category: 'Celebration Cakes',
+    images: [ccModernBlackForest],
+  },
+  {
+    id: 'cc-11',
+    name: 'Burn Cake - Classic Vanilla',
+    description: 'Trending classic vanilla burn cake.',
+    price: 180.00,
+    category: 'Celebration Cakes',
+    images: [ccBurnCake],
+  },
+  {
+    id: 'cc-12',
+    name: 'Chocolate Strawberry Cake',
+    description: 'Classic chocolate and fresh strawberry combination.',
+    price: 180.00,
+    category: 'Celebration Cakes',
+    images: [ccChocStrawberry],
+  },
+  {
+    id: 'cc-13',
+    name: 'Classic Black Forest',
+    description: 'Traditional black forest cake with cherries and cream.',
+    price: 180.00,
+    category: 'Celebration Cakes',
+    images: [ccClassicBlackForest],
+  },
+  {
+    id: 'cc-14',
+    name: 'Vanilla Cake',
+    description: 'Classic, moist vanilla celebration cake.',
+    price: 180.00,
+    category: 'Celebration Cakes',
+    images: [ccVanillaCake],
+  },
+  {
+    id: 'cc-15',
+    name: 'Caramel Fantasy',
+    description: 'Decadent caramel fantasy celebration cake.',
+    price: 135.00,
+    category: 'Celebration Cakes',
+    images: [ccCaramelFantasy],
+  },
+  {
+    id: 'cc-16',
     name: 'Carrot Cake',
-    description: 'Moist carrot cake with cream cheese frosting and walnuts',
-    price: 42,
-    category: 'Cakes',
-    images: ['https://images.unsplash.com/photo-1640794334523-b299f14d28db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9jb2xhdGUlMjBjYWtlJTIwbHV4dXJpb3VzfGVufDF8fHx8MTc3NTI4NTc2NHww&ixlib=rb-4.1.0&q=80&w=1080'],
+    description: 'Carrot cake with rich cream cheese filling & icing.',
+    price: 90.00,
+    category: 'Celebration Cakes',
+    images: [ccCarrotCake],
   },
   {
-    id: 'cake-11',
-    name: 'Macarons',
-    description: 'French macarons in assorted flavors',
-    price: 38,
-    category: 'Pastries',
-    images: ['https://images.unsplash.com/photo-1759303380841-55c09244fd2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY2FrZSUyMHBhc3RyeXxlbnwxfHx8fDE3NzUyODU3NjR8MA&ixlib=rb-4.1.0&q=80&w=1080'],
+    id: 'cc-17',
+    name: 'Gluten Free Orange & Almond Cake',
+    description: 'Delicious and completely gluten-free orange and almond cake.',
+    price: 80.00,
+    category: 'Celebration Cakes',
+    images: [ccOrangeAlmond],
   },
+
+  // ---------------------------------------------------------
+  // CUPCAKES (5 Items) - Priced per 6 cakes
+  // ---------------------------------------------------------
   {
-    id: 'cake-12',
-    name: 'Birthday Cupcakes',
-    description: 'Decorated cupcakes for birthday celebrations',
-    price: 32,
+    id: 'cup-1',
+    name: 'Gourmet Cupcakes',
+    description: 'High-end gourmet cupcakes. (Priced per 6 cakes)',
+    price: 45.70,
     category: 'Cupcakes',
-    images: ['https://images.unsplash.com/photo-1680580735621-4371027734eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXBjYWtlcyUyMGNvbG9yZnVsfGVufDF8fHx8MTc3NTI4NTc2NXww&ixlib=rb-4.1.0&q=80&w=1080'],
+    images: [cupGourmet],
+  },
+  {
+    id: 'cup-2',
+    name: 'Regular Cupcakes',
+    description: 'Classic regular cupcakes. (Priced per 6 cakes)',
+    price: 40.80,
+    category: 'Cupcakes',
+    images: [cupRegular],
+  },
+  {
+    id: 'cup-3',
+    name: 'Mini Cupcakes',
+    description: 'Assorted mini cupcakes perfect for sharing. (Priced per 6 cakes)',
+    price: 30.00,
+    category: 'Cupcakes',
+    images: [cupMini],
+  },
+  {
+    id: 'cup-4',
+    name: 'Gourmet Cupcake Floral - Hydrangeas',
+    description: 'Beautiful hydrangea floral design. (Priced per 6 cakes, approx $7.62/pp)',
+    price: 45.72,
+    category: 'Cupcakes',
+    images: [cupHydrangeas],
+  },
+  {
+    id: 'cup-5',
+    name: 'Gourmet Cupcake Floral - Rosette',
+    description: 'Beautiful rosette floral design. (Priced per 6 cakes, approx $7.62/pp)',
+    price: 45.72,
+    category: 'Cupcakes',
+    images: [cupRosette],
   },
 ];
 
@@ -115,10 +309,8 @@ interface CakesOrderProps {
 }
 
 export default function CakesOrder({ onReturnHome, onExploreMenu }: CakesOrderProps) {
-  // FIXED: Removed the broken getCakesItems from here entirely
   const { cakesStep, setCakesStep, addItem, updateQuantity, eventDetails, setEventDetails, selectedItems: allSelectedItems } = useOrder();
   
-  // FIXED: Restored the selectedItems variable using the data from the context!
   const selectedItems = allSelectedItems;
 
   const handleQuantityChange = (id: string, quantity: number) => {

@@ -14,6 +14,7 @@ interface MenuItem {
   price: number;
   category: string;
   images: string[];
+  externalUrl?: string;
 }
 
 interface CartItem {
@@ -32,7 +33,8 @@ interface StepCakesMenuProps {
   onProceed: () => void;
 }
 
-const categories = ['All', 'Cakes', 'Pastries', 'Cupcakes'];
+// FIXED: Updated categories to perfectly match the new data array from CakesOrder
+const categories = ['All', 'Wedding Cakes', 'Celebration Cakes', 'Cupcakes'];
 
 // Import catering menu items from Order page
 import { menuItems as cateringMenuItems } from '../../Order';
@@ -55,9 +57,16 @@ export function StepCakesMenu({ menuItems, selectedItems, onQuantityChange, onPr
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleImageClick = (item: MenuItem, imageIndex: number) => {
+  // FIXED: This function now accepts the string URL passed from OrderMenuCard.tsx
+  // and correctly calculates the index so the Lightbox doesn't crash!
+  const handleImageClick = (item: MenuItem, clickedImageUrl: string) => {
     setSelectedDish(item);
-    setCurrentImageIndex(imageIndex);
+    
+    // Find what position this image holds in the item's array
+    const imageIndex = item.images.findIndex((img) => img === clickedImageUrl);
+    
+    // If we found it, use it! Otherwise default to the first image (0)
+    setCurrentImageIndex(imageIndex !== -1 ? imageIndex : 0);
     setLightboxOpen(true);
   };
 
@@ -138,11 +147,11 @@ export function StepCakesMenu({ menuItems, selectedItems, onQuantityChange, onPr
                     <OrderMenuCard
                       key={item.id}
                       item={item}
-                      // FIXED: We now safely grab JUST the quantity number, defaulting to 0 if it doesn't exist
                       quantity={selectedItems[item.id]?.quantity || 0}
                       onQuantityChange={onQuantityChange}
                       layout="vertical"
-                      onImageClick={() => handleImageClick(item, 0)}
+                      // FIXED: Pass the item and the string URL up to our fixed handler
+                      onImageClick={(imageUrl) => handleImageClick(item, imageUrl)}
                     />
                   ))}
 

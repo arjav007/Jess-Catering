@@ -40,7 +40,7 @@ export function CakesHero() {
               className="text-4xl md:text-5xl lg:text-[52px] leading-tight lg:leading-[64px] text-[#6B8A47]"
               style={{ fontFamily: 'Abhaya Libre SemiBold, serif' }}
             >
-              Artisanal Cakes & Pastries
+              Artisanal Cakes & Cupcakes
             </motion.h1>
 
             <motion.div

@@ -1,4 +1,4 @@
-import { motion, useInView } from 'motion/react';
+import { motion, useInView, AnimatePresence } from 'motion/react';
 import { useRef, useState } from 'react';
 import { X, Calendar, Users, Palette } from 'lucide-react@0.487.0';
 import { EnquiryFormPopup } from './EnquiryFormPopup';
@@ -30,12 +30,6 @@ export function CakeGallery() {
       category: 'Wedding Cakes'
     },
     {
-      id: '3',
-      url: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXN0cnklMjBkZXNzZXJ0JTIwZ291cm1ldHxlbnwxfHx8fDE3NzYzMzE1MTd8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      title: 'Artisan Pastries',
-      category: 'Pastries'
-    },
-    {
       id: '4',
       url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiaXJ0aGRheSUyMGNha2UlMjBjb2xvcmZ1bHxlbnwxfHx8fDE3NzYzMzE1MTh8MA&ixlib=rb-4.1.0&q=80&w=1080',
       title: 'Birthday Celebration',
@@ -58,12 +52,6 @@ export function CakeGallery() {
       url: 'https://images.unsplash.com/photo-1562440499-64c9a111f713?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aWVyZWQlMjBjYWtlJTIwd2VkZGluZ3xlbnwxfHx8fDE3NzYzMzE1MTl8MA&ixlib=rb-4.1.0&q=80&w=1080',
       title: 'Multi-Tiered Elegance',
       category: 'Wedding Cakes'
-    },
-    {
-      id: '8',
-      url: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVuY2glMjBwYXN0cnklMjBlbGVnYW50fGVufDF8fHx8MTc3NjMzMTUyMHww&ixlib=rb-4.1.0&q=80&w=1080',
-      title: 'French Delicacies',
-      category: 'Pastries'
     }
   ];
 
@@ -179,7 +167,7 @@ export function CakeGallery() {
           </motion.div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {galleryImages.map((image, index) => (
               <motion.div
                 key={image.id}
@@ -233,51 +221,60 @@ export function CakeGallery() {
         </div>
       </section>
 
-      {/* Image Lightbox Modal */}
-      {selectedImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 text-white hover:text-[#D5B36B] transition-colors duration-300 z-10"
-          >
-            <X size={32} />
-          </button>
-
+      {/* FIXED: Bulletproof Inline Backdrop Blur */}
+      <AnimatePresence>
+        {selectedImage && (
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-5xl w-full"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 sm:p-6 md:p-8"
+            // THE FIX: Forcing the blur directly on the style object guarantees it works across all browsers!
+            style={{ 
+              zIndex: 99999,
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)'
+            }} 
+            onClick={() => setSelectedImage(null)}
           >
-            <img
-              src={selectedImage.url}
-              alt={selectedImage.title}
-              className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
-            />
-            <div className="text-center mt-6">
-              <p 
-                className="text-[#D5B36B] text-sm uppercase tracking-wider mb-2"
-                style={{ fontFamily: 'var(--font-body)' }}
-              >
-                {selectedImage.category}
-              </p>
-              <h3 
-                className="text-white text-2xl"
-                style={{ fontFamily: 'Abhaya Libre SemiBold, serif' }}
-              >
-                {selectedImage.title}
-              </h3>
-            </div>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-300 z-10"
+            >
+              <X size={24} />
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="w-full max-w-4xl flex flex-col items-center justify-center mx-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedImage.url}
+                alt={selectedImage.title}
+                className="w-auto h-auto max-w-full max-h-[70vh] object-contain rounded-xl shadow-2xl"
+              />
+              <div className="text-center mt-6 w-full">
+                <p 
+                  className="text-[#D5B36B] text-sm uppercase tracking-wider mb-2 font-medium"
+                  style={{ fontFamily: 'var(--font-body)' }}
+                >
+                  {selectedImage.category}
+                </p>
+                <h3 
+                  className="text-white text-2xl md:text-3xl"
+                  style={{ fontFamily: 'Abhaya Libre SemiBold, serif' }}
+                >
+                  {selectedImage.title}
+                </h3>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Enquiry Form Popup */}
       <EnquiryFormPopup
