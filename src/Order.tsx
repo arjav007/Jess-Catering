@@ -57,7 +57,7 @@ import liqueurChocolatesImg from './assets/liqueur-chocolates.png';
 export const menuItems = [
   
   // ---------------------------------------------------------
-  // PACKAGES / 3-COURSE MEALS 
+  // PACKAGES / 3-COURSE MEALS & BUNDLES
   // ---------------------------------------------------------
   {
     id: 'pkg-1',
@@ -65,7 +65,6 @@ export const menuItems = [
     description: '3 Entrées, 2 Hot Mains OR 3 Pick Me Ups, and 1 Dessert. (Priced per person)',
     price: 65.00,
     category: 'Packages',
-    // Updated to a beautiful top-down spread showing multiple dishes together
     images: ['https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800'],
     isVeg: false,
   },
@@ -75,10 +74,56 @@ export const menuItems = [
     description: '3 Entrées, 2 Hot Mains OR 3 Pick Me Ups, and 2 Desserts. (Priced per person)',
     price: 85.00,
     category: 'Packages',
-    // Updated to a luxurious, large dining spread with multiple courses visible
     images: ['https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=800'],
     isVeg: false,
   },
+  {
+    id: 'pkg-3',
+    name: 'Bundle: Any 3 Starters',
+    description: 'Choose any 3 starters. (Priced per person)',
+    price: 30.00,
+    category: 'Packages',
+    images: ['https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=800'],
+    isVeg: false,
+  },
+  {
+    id: 'pkg-4',
+    name: 'Bundle: Any 3 Cold Mains',
+    description: 'Choose any 3 cold mains / pick me ups. (Priced per person)',
+    price: 28.00,
+    category: 'Packages',
+    images: ['https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800'],
+    isVeg: false,
+  },
+  {
+    id: 'pkg-5',
+    name: 'Bundle: Any 2 Hot Mains',
+    description: 'Choose any 2 hot mains. (Priced per person)',
+    price: 35.00,
+    category: 'Packages',
+    images: ['https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&q=80&w=800'],
+    isVeg: false,
+  },
+  {
+    id: 'pkg-6',
+    name: 'Bundle: Any 2 Desserts',
+    description: 'Choose any 2 desserts or Coco De Venci Chocolates. (Priced per person)',
+    price: 21.00,
+    category: 'Packages',
+    images: ['https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=800'],
+    isVeg: false,
+  },
+  {
+    id: 'pkg-7',
+    name: 'Coco De Venci Chocolates (Box of 6)',
+    description: 'Premium Coco De Venci Liqueur Chocolates. Box of 6.',
+    price: 30.00,
+    category: 'Packages',
+    images: [liqueurChocolatesImg],
+    isVeg: true,
+    externalUrl: 'https://www.cocodevenci.com',
+  },
+
   // ---------------------------------------------------------
   // APPETISERS ($16.50)
   // ---------------------------------------------------------
@@ -122,7 +167,7 @@ export const menuItems = [
     id: 'app-5',
     name: 'Sliders',
     description: 'Fried Chicken, Pulled Beef, Pork or Chicken. V, VG, GF options available',
-    price: 16.50,
+    price: 16,
     category: 'Appetisers',
     images: [slidersImg],
     isVeg: false,
@@ -131,7 +176,7 @@ export const menuItems = [
     id: 'app-6',
     name: 'Tandoori Paneer skewers (VG)',
     description: 'Paneer skewers in a tandoori marinade',
-    price: 16.50,
+    price: 10.50,
     category: 'Appetisers',
     images: [tandooriPaneerImg],
     isVeg: true,
