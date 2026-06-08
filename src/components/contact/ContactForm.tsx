@@ -15,7 +15,7 @@ export function ContactForm() {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   
   // 1. Added a state to manage the button text
-  const [buttonText, setButtonText] = useState('Contact Us');
+  const [buttonText, setButtonText] = useState('Submit');
   
   // Renamed to formValues to avoid clashing with the native FormData object
   const [formValues, setFormValues] = useState({
@@ -275,13 +275,13 @@ export function ContactForm() {
                     <MapPin className="w-5 h-5 text-[#6B8A47] transition-colors duration-300 group-hover:text-[#D5B36B]" />
                   </div>
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=56+McDougall+Pl+Truganina+VIC+3029"
+                    href="https://www.google.com/maps/search/Melbourne%20VIC,%20Australia"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#6E564A] text-base hover:text-[#D5B36B] transition-colors duration-300"
                     style={{ fontFamily: 'var(--font-body)' }}
                   >
-                    56 McDougall Pl, Truganina VIC 3029
+                    Melbourne, VIC
                   </a>
                 </motion.div>
 

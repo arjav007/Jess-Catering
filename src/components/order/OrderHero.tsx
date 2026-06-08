@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import imgCateringHero from "figma:asset/6a4d55282a122b6156d097025368791c1d1847c6.png";
+// FIXED: Updated import to use your local asset
+import imgCateringHero from "../../assets/order-with-ease.jpg";
 
 export function OrderHero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -94,7 +95,7 @@ export function OrderHero() {
               }}
               src={imgCateringHero}
               alt="Catering spread"
-              className="w-full h-full object-cover scale-110"
+              className="w-full h-full object-cover scale-90"
             />
           </motion.div>
         </div>

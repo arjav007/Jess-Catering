@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Footer } from './components/Footer';
-import imgCatering from "figma:asset/89df004593ab1004ad95a12d506a7351a5eafc5e.png";
-import imgChocolates from "figma:asset/7dc0d6c2835088eea91239387b103e7260dca829.png";
+import chocolatesImg from './assets/home-chocolates.jpg';
 import svgPaths from "./imports/svg-ho35oie2ec";
 
 interface HomeProps {
@@ -127,8 +126,8 @@ export default function Home({ onPageChange }: HomeProps) {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-10 md:py-14 bg-[#ffffff]">
+     {/* Services Section */}
+     <section className="py-10 md:py-14 bg-[#ffffff]">
         <div className="px-6 md:px-16">
           {/* Section Header */}
           <motion.div
@@ -165,8 +164,9 @@ export default function Home({ onPageChange }: HomeProps) {
             >
               <div className="flex flex-col gap-3">
                 <div className="relative overflow-hidden rounded-2xl aspect-[592/288]">
+                  {/* UPDATED: Unsplash Image for Catering */}
                   <img
-                    src={imgCatering}
+                    src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=800"
                     alt="Catering for Every Occasion"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
@@ -207,8 +207,9 @@ export default function Home({ onPageChange }: HomeProps) {
             >
               <div className="flex flex-col gap-3">
                 <div className="relative overflow-hidden rounded-2xl aspect-[592/288]">
+                  {/* UPDATED: Local Asset Image for Chocolates */}
                   <img
-                    src={imgChocolates}
+                    src={chocolatesImg}
                     alt="Artisan Chocolates"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
@@ -326,8 +327,8 @@ export default function Home({ onPageChange }: HomeProps) {
                 className="rounded-lg overflow-hidden aspect-square"
               >
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1636979275740-0c17f82f40d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kY3JhZnRlZCUyMGFydGlzYW4lMjBjaG9jb2xhdGVzfGVufDF8fHx8MTc2NjM5NTkzM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Chocolate"
+                  src="https://images.unsplash.com/photo-1548907040-4baa42d10919?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80"
+                  alt="Gourmet Chocolate Pralines"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
               </motion.div>

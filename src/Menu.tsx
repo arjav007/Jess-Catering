@@ -6,11 +6,14 @@ import { ChocolatesSection } from './components/ChocolatesSection';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 
+// Import your local appetisers photo here
+import appetisersHero from './assets/cajun-tacos.png';
+import ChocolateImg from './assets/tiramisu.png'
 // Pulls the central menu item array containing all your local image assets
 import { menuItems } from './Order';
 
 // Category list matching the exact data item categories
-const categories = ['All', 'Packages', 'Appetisers', 'Mains', 'Hot Mains', 'Desserts'];
+const categories = ['All', 'Packages', 'Appetisers', 'Cold Mains', 'Hot Mains', 'Desserts'];
 interface MenuProps {
   onContactClick?: () => void;
   onOrderClick?: () => void;
@@ -33,7 +36,7 @@ export default function Menu({ onContactClick, onOrderClick }: MenuProps) {
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
-      <HeroSection imageUrl="https://images.unsplash.com/photo-1624763149686-1893acf73092?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXRlcmluZyUyMGV2ZW50JTIwc3ByZWFkfGVufDF8fHx8MTc21MjA3NDY4fDA&ixlib=rb-4.1.0&q=80&w=1080" />
+      <HeroSection imageUrl={appetisersHero} />
 
       {/* Category Filter */}
       <div>
@@ -49,7 +52,7 @@ export default function Menu({ onContactClick, onOrderClick }: MenuProps) {
 
       {/* Chocolates Section */}
       <ChocolatesSection 
-        imageUrl="https://images.unsplash.com/photo-1580916782504-3c4ac5200924?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjaG9jb2xhdGUlMjB0cnVmZmxlcyUyMG1hcmJsZXxlbnwxfHx8fDE3NjEyMDc0NzF8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+        imageUrl={ChocolateImg}
         onOrderClick={onOrderClick}
       />
 

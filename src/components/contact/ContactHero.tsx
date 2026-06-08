@@ -81,7 +81,7 @@ export function ContactHero() {
               className="bg-[#6B8A47] text-white px-7 py-4 rounded-[10px] hover:bg-[#D5B36B] transition-all duration-300 text-base"
               style={{ fontFamily: 'var(--font-body)' }}
             >
-              Contact Us
+              Reach out
             </motion.button>
           </motion.div>
 

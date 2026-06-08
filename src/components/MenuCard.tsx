@@ -12,13 +12,14 @@ import {
 interface MenuCardProps {
   name: string;
   description: string;
-  price: string;
+  price?: number; // FIXED: Made price optional and changed to number
   images: string[];
+  externalUrl?: string; // FIXED: Added support for the external website link
   onImageClick: (imageIndex: number) => void;
   delay?: number;
 }
 
-export function MenuCard({ name, description, price, images, onImageClick, delay = 0 }: MenuCardProps) {
+export function MenuCard({ name, description, price, images, externalUrl, onImageClick, delay = 0 }: MenuCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -38,15 +39,24 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
   const scrollPrev = () => api?.scrollPrev();
   const scrollNext = () => api?.scrollNext();
 
+  const handleCardOrImageClick = (index: number) => {
+    if (externalUrl) {
+      window.open(externalUrl, '_blank');
+    } else {
+      onImageClick(index);
+    }
+  };
+
   return (
     <motion.div
       ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6, delay }}
-      className="flex flex-col"
+      className={`flex flex-col ${externalUrl ? 'cursor-pointer' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => externalUrl && handleCardOrImageClick(0)}
     >
       {/* Image Carousel */}
       <div className="relative overflow-hidden rounded-2xl group">
@@ -62,7 +72,10 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
               <CarouselItem key={index}>
                 <motion.div
                   className="cursor-pointer"
-                  onClick={() => onImageClick(index)}
+                  onClick={(e) => {
+                    if (externalUrl) return; // Let parent handle it
+                    onImageClick(index);
+                  }}
                 >
                   <ImageWithFallback
                     src={image}
@@ -82,6 +95,7 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
                 animate={{ opacity: isHovered ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={(e) => {
+                  e.stopPropagation();
                   e.preventDefault();
                   scrollPrev();
                 }}
@@ -96,6 +110,7 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
                 animate={{ opacity: isHovered ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={(e) => {
+                  e.stopPropagation();
                   e.preventDefault();
                   scrollNext();
                 }}
@@ -114,6 +129,7 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
                 <button
                   key={index}
                   onClick={(e) => {
+                    e.stopPropagation();
                     e.preventDefault();
                     api?.scrollTo(index);
                   }}
@@ -133,7 +149,7 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
       {/* Card Content */}
       <div className="py-2">
         <h3
-          className="text-2xl leading-[32px] text-[#6B8A47] mb-3"
+          className="text-2xl leading-[32px] text-[#6B8A47] mb-3 group-hover:text-[#5a7339] transition-colors"
           style={{ fontFamily: 'Abhaya Libre SemiBold, serif' }}
         >
           {name}
@@ -147,12 +163,29 @@ export function MenuCard({ name, description, price, images, onImageClick, delay
             {description}
           </p>
           
-          <p
-            className="text-xl leading-[28px] text-[#C49533]"
-            style={{ fontFamily: 'var(--font-body)' }}
-          >
-            A${price}
-          </p>
+          <div className="flex items-center justify-between">
+            {/* FIXED: Conditionally render the price if it exists */}
+            {price !== undefined ? (
+              <p
+                className="text-xl leading-[28px] text-[#C49533]"
+                style={{ fontFamily: 'var(--font-body)' }}
+              >
+                A${price}
+              </p>
+            ) : (
+              <span /> /* Empty span for flex-between spacing */
+            )}
+
+            {/* FIXED: Conditionally render the Visit Website text if it's an external link */}
+            {externalUrl && (
+              <span 
+                className="text-[#6B8A47] text-lg font-medium tracking-wide flex items-center gap-1 group-hover:text-[#5a7339] transition-colors"
+                style={{ fontFamily: 'var(--font-body)' }}
+              >
+                Visit Website ↗
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>

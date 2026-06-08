@@ -78,7 +78,7 @@ export function BakingClasses() {
 
               {/* Button with External Link Icon */}
               <a
-                href="https://classbento.com.au/jess-catering"
+                href="https://classbento.com.au/2rj2u5t5zwau-widget?wtn=2rj2u5t5zwau&is_preview=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#6b8a47] text-white text-[16px] leading-[24px] rounded-[10px] h-[56px] px-8 hover:bg-[#D5B36B] transition-colors duration-300 inline-flex items-center gap-2 mt-2"

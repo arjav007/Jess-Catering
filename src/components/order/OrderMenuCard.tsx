@@ -7,11 +7,11 @@ interface MenuItem {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price?: number; // FIXED: Made price optional so cards without prices don't break
   category: string;
   images: string[];
   isVeg?: boolean;
-  externalUrl?: string; // NEW: Added to support external website links
+  externalUrl?: string; 
 }
 
 interface OrderMenuCardProps {
@@ -104,9 +104,14 @@ export function OrderMenuCard({ item, quantity, onQuantityChange, layout = 'vert
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-[#D5B36B]" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.125rem' }}>
-                A${item.price}
-              </span>
+              {/* FIXED: Only show the A$ sign if a price actually exists */}
+              {item.price !== undefined ? (
+                <span className="text-[#D5B36B]" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.125rem' }}>
+                  A${item.price}
+                </span>
+              ) : (
+                <span /> /* Empty span to push the link to the right edge */
+              )}
 
               {/* Conditional Rendering for External Link vs Add Button */}
               {isExternal ? (
@@ -239,9 +244,14 @@ export function OrderMenuCard({ item, quantity, onQuantityChange, layout = 'vert
 
         {/* Price and Controls */}
         <div className="flex items-center justify-between w-full">
-          <span className="text-[#c49533] leading-[28px]" style={{ fontFamily: 'var(--font-body)', fontSize: '20px' }}>
-            A${item.price}
-          </span>
+          {/* FIXED: Only show the A$ sign if a price actually exists */}
+          {item.price !== undefined ? (
+            <span className="text-[#c49533] leading-[28px]" style={{ fontFamily: 'var(--font-body)', fontSize: '20px' }}>
+              A${item.price}
+            </span>
+          ) : (
+            <span /> /* Empty span to push the link to the right edge */
+          )}
 
           {/* Conditional Rendering for External Link vs Add Button */}
           {isExternal ? (

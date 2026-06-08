@@ -7,9 +7,10 @@ export interface MenuItem {
   id: string;
   name: string;
   description: string;
-  price: string;
+  price?: number; // FIXED: Changed from string to optional number to match your data perfectly
   images: string[];
   category: string;
+  externalUrl?: string; // FIXED: Added support for the external website link
 }
 
 interface MenuGridProps {
@@ -27,6 +28,12 @@ export function MenuGrid({ items, activeCategory }: MenuGridProps) {
     : items.filter(item => item.category === activeCategory);
 
   const handleImageClick = (item: MenuItem, imageIndex: number) => {
+    // FIXED: If the item has an external URL, open the website instead of the lightbox!
+    if (item.externalUrl) {
+      window.open(item.externalUrl, '_blank');
+      return;
+    }
+    
     setSelectedDish(item);
     setCurrentImageIndex(imageIndex);
     setLightboxOpen(true);
@@ -64,6 +71,7 @@ export function MenuGrid({ items, activeCategory }: MenuGridProps) {
                   description={item.description}
                   price={item.price}
                   images={item.images}
+                  externalUrl={item.externalUrl} // Passing the URL down to the card
                   onImageClick={(imageIndex) => handleImageClick(item, imageIndex)}
                   delay={index * 0.1}
                 />

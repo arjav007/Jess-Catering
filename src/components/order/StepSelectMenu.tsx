@@ -31,7 +31,7 @@ interface StepSelectMenuProps {
   onProceed: () => void;
 }
 
-const categories = ['All', 'Packages', 'Appetisers', 'Mains', 'Hot Mains', 'Desserts'];
+const categories = ['All', 'Packages', 'Appetisers', 'Cold Mains', 'Hot Mains', 'Desserts'];
 
 export function StepSelectMenu({ menuItems, selectedItems, onQuantityChange, onProceed }: StepSelectMenuProps) {
   const [activeCategory, setActiveCategory] = useState('All');

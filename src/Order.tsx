@@ -51,7 +51,7 @@ import chocolateMousseImg from './assets/chocolate-mousse.png';
 import browniesImg from './assets/brownies.png';
 import pannaCottaImg from './assets/panna-cotta.png';
 import liqueurChocolatesImg from './assets/liqueur-chocolates.png';
-
+import premiumimg from './assets/premium-meal.jpg';
 // Menu data for ordering
 // Complete, fully-formatted menu data
 export const menuItems = [
@@ -74,7 +74,7 @@ export const menuItems = [
     description: '3 Entrées, 2 Hot Mains OR 3 Pick Me Ups, and 2 Desserts. (Priced per person)',
     price: 85.00,
     category: 'Packages',
-    images: ['https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=800'],
+    images: [premiumimg],
     isVeg: false,
   },
   {
@@ -97,7 +97,7 @@ export const menuItems = [
   },
   {
     id: 'pkg-5',
-    name: 'Bundle: Any 2 Hot Mains',
+    name: 'Curry Hot Meal',
     description: 'Choose any 2 hot mains. (Priced per person)',
     price: 35.00,
     category: 'Packages',
@@ -117,7 +117,6 @@ export const menuItems = [
     id: 'pkg-7',
     name: 'Coco De Venci Chocolates (Box of 6)',
     description: 'Premium Coco De Venci Liqueur Chocolates. Box of 6.',
-    price: 30.00,
     category: 'Packages',
     images: [liqueurChocolatesImg],
     isVeg: true,
@@ -271,16 +270,25 @@ export const menuItems = [
     images: [zucchiniFrittersImg],
     isVeg: true,
   },
+  {
+    id: 'app-17',
+    name: 'Samosa',
+    description: 'Choice of Chicken, Beef, potato',
+    price: 10,
+    category: 'Appetisers',
+    images: [samosaImg],
+    isVeg: false,
+  },
 
   // ---------------------------------------------------------
-  // MAINS - PICK ME UPS ($8.97)
+  // COLD MAINS - PICK ME UPS ($8.97)
   // ---------------------------------------------------------
   {
     id: 'main-1',
     name: 'Assorted Sandwiches',
     description: 'Choice of Chicken, smoked beef, smoked salmon, tuna, ham or salami. V, VG, GF options available',
     price: 10,
-    category: 'Mains',
+    category: 'Cold Mains',
     images: [sandwichesImg],
     isVeg: false,
   },
@@ -289,7 +297,7 @@ export const menuItems = [
     name: 'Assorted Bagels',
     description: 'Choice of Chicken, tuna, smoked Salmon. V, VG, GF options available',
     price: 6,
-    category: 'Mains',
+    category: 'Cold Mains',
     images: [bagelsImg],
     isVeg: false,
   },
@@ -298,7 +306,7 @@ export const menuItems = [
     name: 'Assorted Wraps',
     description: 'Choice of Chicken, smoked beef, smoked salmon, tuna, ham or salami. V, VG, GF options available',
     price: 10,
-    category: 'Mains',
+    category: 'Cold Mains',
     images: [wrapsImg],
     isVeg: false,
   },
@@ -307,7 +315,7 @@ export const menuItems = [
     name: 'Assorted Parathas',
     description: 'Choice of Potato, Cheese Chilli garlic, plain',
     price: 10,
-    category: 'Mains',
+    category: 'Cold Mains',
     images: [parathasImg],
     isVeg: true,
   },
@@ -316,18 +324,9 @@ export const menuItems = [
     name: 'Assorted Salads',
     description: 'Choice of Garden, Greek, Rocket and Almond, Coleslaw, Asian Slaw. Choice of meat can be added.',
     price: 10,
-    category: 'Mains',
+    category: 'Cold Mains',
     images: [saladsImg],
     isVeg: true,
-  },
-  {
-    id: 'main-6',
-    name: 'Samosa',
-    description: 'Choice of Chicken, Beef, potato',
-    price: 10,
-    category: 'Mains',
-    images: [samosaImg],
-    isVeg: false,
   },
 
   // ---------------------------------------------------------
@@ -407,7 +406,7 @@ export const menuItems = [
   },
   {
     id: 'hot-9',
-    name: 'Rice (included in price)',
+    name: 'Rice',
     description: 'Choice of plain, saffon or veg pulao',
     price: 10.00,
     category: 'Hot Mains',
@@ -467,11 +466,10 @@ export const menuItems = [
     id: 'des-6',
     name: 'Liqueur Chocolates',
     description: 'Dark chocolate shells with variety of liqueur infused chocolate ganaches. Ask for non Alcholal if needed.',
-    price: 9.98,
     category: 'Desserts',
-    images: [liqueurChocolatesImg], // Or whatever variable you use
+    images: [liqueurChocolatesImg],
     isVeg: true,
-    externalUrl: 'https://www.cocodevenci.com', // <--- Add this line!
+    externalUrl: 'https://www.cocodevenci.com/shop',
   }
 ];
 

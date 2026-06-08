@@ -1,6 +1,6 @@
 import { useOrder } from './context/OrderContext';
 import { CakesHero } from './components/cakes/CakesHero';
-import { CakeGallery } from './components/cakes/CakeGallery';
+import { CakeGallery } from './components/cakes/CakeGallery'; // ADDED BACK
 import { BakingClasses } from './components/cakes/BakingClasses';
 import { ProgressIndicator } from './components/cakes/ProgressIndicator';
 import { StepCakesMenu } from './components/cakes/StepCakesMenu';
@@ -54,6 +54,14 @@ export const cakesMenuItems = [
   // WEDDING CAKES (8 Items)
   // ---------------------------------------------------------
   {
+    id: 'wc-3',
+    name: '2 Tiered Wedding Cake - Lemon & Chocolate',
+    description: 'Beautiful 2 tiered cake featuring lemon and chocolate.',
+    price: 500.00,
+    category: 'Wedding Cakes',
+    images: [wcLemonChoc],
+  },
+  {
     id: 'wc-1',
     name: 'Modern Wedding Cake - Butterscotch',
     description: 'Elegant modern wedding cake in butterscotch.',
@@ -69,14 +77,7 @@ export const cakesMenuItems = [
     category: 'Wedding Cakes',
     images: [wcClassic2Tier],
   },
-  {
-    id: 'wc-3',
-    name: '2 Tiered Wedding Cake - Lemon & Chocolate',
-    description: 'Beautiful 2 tiered cake featuring lemon and chocolate.',
-    price: 500.00,
-    category: 'Wedding Cakes',
-    images: [wcLemonChoc],
-  },
+  
   {
     id: 'wc-4',
     name: 'Midnight Berry Lux',
@@ -288,7 +289,7 @@ export const cakesMenuItems = [
   {
     id: 'cup-4',
     name: 'Gourmet Cupcake Floral - Hydrangeas',
-    description: 'Beautiful hydrangea floral design. (Priced per 6 cakes, approx $7.62/pp)',
+    description: 'Beautiful hydrangea floral design. (Priced per 6 cakes)',
     price: 45.72,
     category: 'Cupcakes',
     images: [cupHydrangeas],
@@ -296,7 +297,7 @@ export const cakesMenuItems = [
   {
     id: 'cup-5',
     name: 'Gourmet Cupcake Floral - Rosette',
-    description: 'Beautiful rosette floral design. (Priced per 6 cakes, approx $7.62/pp)',
+    description: 'Beautiful rosette floral design. (Priced per 6 cakes)',
     price: 45.72,
     category: 'Cupcakes',
     images: [cupRosette],

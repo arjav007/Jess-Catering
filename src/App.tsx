@@ -6,31 +6,37 @@ import Menu from './Menu';
 import About from './About';
 import Contact from './Contact';
 import Order from './Order';
-import Cakes from './CakesOrder'; // <-- 1. Imported the new Cakes page
+import Cakes from './CakesOrder'; 
 import { StepConfirmation } from './components/order/StepConfirmation'; 
 
 export default function App() {
-  // 2. Added 'cakes' to the allowed pages here
   const [currentPage, setCurrentPage] = useState<'home' | 'menu' | 'about' | 'contact' | 'order' | 'success' | 'cakes'>('home');
+
+  // Listen for the Footer navigation events globally
+  useEffect(() => {
+    const handleCustomNavigation = (e: any) => {
+      if (e.detail) {
+        setCurrentPage(e.detail);
+      }
+    };
+    
+    window.addEventListener('navigatePage', handleCustomNavigation);
+    return () => window.removeEventListener('navigatePage', handleCustomNavigation);
+  }, []);
 
   // Intercept the Merchant Warrior redirect when the app loads
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    
-    // Check for the NEW variable Merchant Warrior sends back
     const paymentStatus = urlParams.get('status');
 
     if (paymentStatus === 'approved') {
-      // Payment Approved! Show YOUR success screen
       setCurrentPage('success');
-      // Clean the ugly Merchant Warrior data out of the URL bar
       window.history.replaceState({}, document.title, window.location.pathname);
       
     } else if (paymentStatus && paymentStatus !== 'approved') {
-      // Payment Failed or Cancelled (e.g., status=declined)
       alert("Payment was declined or cancelled. Please try again.");
       window.history.replaceState({}, document.title, window.location.pathname);
-      setCurrentPage('order'); // Send them back to the order page to try again
+      setCurrentPage('order'); 
     }
   }, []);
 
@@ -61,12 +67,13 @@ export default function App() {
           />
         )}
 
-        {/* 3. The New Cakes Page Render Block */}
         {currentPage === 'cakes' && (
-          <Cakes onPageChange={(page: any) => setCurrentPage(page)} />
+          <Cakes 
+            onReturnHome={() => setCurrentPage('home')}
+            onExploreMenu={() => setCurrentPage('menu')}
+          />
         )}
 
-        {/* Render YOUR animated component here! */}
         {currentPage === 'success' && (
           <StepConfirmation
             onReturnHome={() => setCurrentPage('home')}
