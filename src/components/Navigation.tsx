@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react@0.487.0';
 import { useState } from 'react';
-
+import jessLogo from '../assets/jess-logo.png';
 interface NavigationProps {
   currentPage: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes';
   onPageChange: (page: 'home' | 'menu' | 'about' | 'contact' | 'order' | 'cakes') => void;
@@ -25,10 +25,13 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             onPageChange('home');
           }}
-          className="text-xl md:text-2xl text-[#6B8A47] hover:text-[#D5B36B] transition-colors duration-300 z-50"
-          style={{ fontFamily: 'var(--font-heading)' }}
+          className="z-50 transition-opacity duration-300 hover:opacity-80 focus:outline-none"
         >
-          Jess Catering
+          <img 
+            src={jessLogo} 
+            alt="Jess Catering" 
+            className="h-16 md:h-20 w-auto object-contain" 
+          />
         </button>
 
         {/* Hamburger Menu Button (Mobile/Tablet) */}
