@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import ownerimg from '../../assets/owner.jpg'
 
 export function AboutHero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -84,9 +85,9 @@ export function AboutHero() {
                 x: mousePosition.x * 5,
                 y: mousePosition.y * 5,
               }}
-              src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
+              src={ownerimg}
               alt="Culinary artistry"
-              className="w-full h-full object-cover scale-110"
+              className="w-full h-full object-contain scale-30"
             />
           </motion.div>
         </div>
