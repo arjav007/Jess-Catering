@@ -5,6 +5,7 @@ import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Footer } from './components/Footer';
 import chocolatesImg from './assets/home-chocolates.jpg';
 import svgPaths from "./imports/svg-ho35oie2ec";
+import ownerImage from './assets/owner.jpg';
 
 interface HomeProps {
   onPageChange: (page: 'menu' | 'about' | 'contact' | 'order' | 'chocolates-order') => void;
@@ -350,9 +351,9 @@ export default function Home({ onPageChange }: HomeProps) {
               className="h-[500px] overflow-clip rounded-[16px]"
             >
               <img
-                src={imgImageWithFallback}
-                alt="Restaurant dining setup"
-                className="w-full h-full object-cover"
+                src={ownerImage}
+                alt="Jess Catering Owner"
+                className="w-full h-full object-contain"
               />
             </motion.div>
 
