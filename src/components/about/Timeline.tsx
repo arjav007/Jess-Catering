@@ -34,7 +34,7 @@ export function Timeline() {
   ];
 
   return (
-    <div ref={ref} className="bg-white">
+    <div id="timeline" ref={ref} className="bg-white">
       <div className="mx-auto px-6 md:px-16 py-10 md:py-14">
         <div className="flex flex-col items-center gap-16">
           <motion.h2

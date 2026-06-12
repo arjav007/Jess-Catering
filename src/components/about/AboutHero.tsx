@@ -62,15 +62,21 @@ export function AboutHero() {
             </motion.p>
 
             <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-              whileHover={{ y: -2, backgroundColor: '#8AA660' }}
-              className="bg-[#6B8A47] text-white px-7 py-4 rounded-[10px] transition-all duration-300 text-base"
-              style={{ fontFamily: 'var(--font-body)' }}
-            >
-              Watch Our Story
-            </motion.button>
+  onClick={() => {
+    const timelineSection = document.getElementById('timeline');
+    if (timelineSection) {
+      timelineSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: 1 }}
+  whileHover={{ y: -2, backgroundColor: '#8AA660' }}
+  className="bg-[#6B8A47] text-white px-7 py-4 rounded-[10px] transition-all duration-300 text-base"
+  style={{ fontFamily: 'var(--font-body)' }}
+>
+  Watch Our Story
+</motion.button>
           </motion.div>
 
           {/* Right Column - Image with Parallax */}
