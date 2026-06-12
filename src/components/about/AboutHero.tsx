@@ -75,7 +75,7 @@ export function AboutHero() {
   className="bg-[#6B8A47] text-white px-7 py-4 rounded-[10px] transition-all duration-300 text-base"
   style={{ fontFamily: 'var(--font-body)' }}
 >
-  Watch Our Story
+Our Journey
 </motion.button>
           </motion.div>
 
