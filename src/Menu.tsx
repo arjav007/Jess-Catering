@@ -7,7 +7,7 @@ import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 
 // Import your local appetisers photo here
-import appetisersHero from './assets/cajun-tacos.png';
+import appetisersHero from './assets/aboutstory.JPG';
 import ChocolateImg from './assets/tiramisu.png'
 // Pulls the central menu item array containing all your local image assets
 import { menuItems } from './Order';

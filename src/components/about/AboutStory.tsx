@@ -1,6 +1,9 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 
+// Import the local image asset
+import aboutStoryImage from '../../assets/aboutstory.JPG';
+
 export function AboutStory() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -83,9 +86,9 @@ export function AboutStory() {
             className="h-[400px] md:h-[500px] rounded-2xl overflow-hidden order-1 lg:order-2"
           >
             <img
-              src="https://images.unsplash.com/photo-1606787620819-8bdf0c44c293?w=800&q=80"
-              alt="Chocolate making"
-              className="w-full h-full object-cover"
+              src={aboutStoryImage}
+              alt="Jess Catering team in the kitchen"
+              className="w-full h-full object-contain"
             />
           </motion.div>
         </div>

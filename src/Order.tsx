@@ -110,7 +110,7 @@ export const menuItems = [
     description: 'Choose any 2 desserts or Coco De Venci Chocolates. (Priced per person)',
     price: 21.00,
     category: 'Packages',
-    images: ['https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=800'],
+    images: [tiramisuImg],
     isVeg: false,
   },
   {
